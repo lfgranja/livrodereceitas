@@ -1,0 +1,190 @@
+/* themes.css - Estilos para temas claro e escuro */
+
+/* Tema claro (padrão) */
+body.light-theme {
+    --bg-color: #f8f9fa;
+    --text-color: #333;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --header-bg: linear-gradient(135deg, #4A90E2, #3a7bc8);
+    --nav-bg: #ffffff;
+    --nav-text: #6c757d;
+    --nav-active: #4A90E2;
+    --btn-primary-bg: #4A90E2;
+    --btn-primary-text: #ffffff;
+    --btn-secondary-bg: #50C878;
+    --btn-secondary-text: #ffffff;
+    --btn-accent-bg: #E94B3C;
+    --btn-accent-text: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --input-focus: #4A90E2;
+    --table-header: #e9ecef;
+    --table-border: #dee2e6;
+    --modal-bg: #ffffff;
+    --alert-info-bg: #d1ecf1;
+    --alert-info-text: #0c5460;
+    --alert-info-border: #bee5eb;
+}
+
+/* Tema escuro */
+body.dark-theme {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --border-color: #333333;
+    --header-bg: linear-gradient(135deg, #1a5fb4, #2a76c8);
+    --nav-bg: #2d2d2d;
+    --nav-text: #cccccc;
+    --nav-active: #4A90E2;
+    --btn-primary-bg: #1a5fb4;
+    --btn-primary-text: #ffffff;
+    --btn-secondary-bg: #2e7d32;
+    --btn-secondary-text: #ffffff;
+    --btn-accent-bg: #c62828;
+    --btn-accent-text: #ffffff;
+    --input-bg: #2d2d2d;
+    --input-border: #444444;
+    --input-focus: #4A90E2;
+    --table-header: #2d2d2d;
+    --table-border: #444444;
+    --modal-bg: #1e1e1e;
+    --alert-info-bg: #1c2d3a;
+    --alert-info-text: #a6d6e0;
+    --alert-info-border: #2a5d7a;
+}
+
+/* Estilos base que se aplicam a ambos os temas */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Cabeçalho */
+.header {
+    background: var(--header-bg);
+    color: var(--btn-primary-text);
+}
+
+/* Cards */
+.card, .recipe-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+/* Navegação */
+.nav-tabs .nav-link {
+    color: var(--nav-text);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--nav-active);
+    border-bottom: 3px solid var(--nav-active);
+}
+
+/* Botões */
+.btn-primary {
+    background-color: var(--btn-primary-bg);
+    border-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+}
+
+.btn-primary:hover {
+    background-color: #3a7bc8;
+    border-color: #3a7bc8;
+}
+
+.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+    border-color: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+}
+
+.btn-secondary:hover {
+    background-color: #43a866;
+    border-color: #43a866;
+}
+
+.btn-accent {
+    background-color: var(--btn-accent-bg);
+    border-color: var(--btn-accent-bg);
+    color: var(--btn-accent-text);
+}
+
+.btn-accent:hover {
+    background-color: #d14335;
+    border-color: #d14335;
+}
+
+/* Inputs */
+.form-control, .form-select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+}
+
+/* Tabelas */
+.price-table th {
+    background-color: var(--table-header);
+    border-bottom: 1px solid var(--table-border);
+}
+
+.price-table td {
+    border-bottom: 1px solid var(--table-border);
+}
+
+/* Modais */
+.modal-content {
+    background-color: var(--modal-bg);
+    color: var(--text-color);
+}
+
+/* Alerts */
+.alert-info {
+    background-color: var(--alert-info-bg);
+    color: var(--alert-info-text);
+    border-color: var(--alert-info-border);
+}
+
+/* Links */
+a {
+    color: #4A90E2;
+}
+
+a:hover {
+    color: #3a7bc8;
+}
+
+/* Scrollbars para tema escuro */
+body.dark-theme::-webkit-scrollbar {
+    width: 12px;
+}
+
+body.dark-theme::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+body.dark-theme::-webkit-scrollbar-thumb {
+    background-color: #4A90E2;
+    border-radius: 6px;
+}
+
+/* Estilos específicos para elementos com classe theme-aware */
+.theme-aware-bg {
+    background-color: var(--card-bg);
+}
+
+.theme-aware-text {
+    color: var(--text-color);
+}
+
+.theme-aware-border {
+    border-color: var(--border-color);
+}

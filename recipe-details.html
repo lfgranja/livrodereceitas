@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Receita - Livro de Receitas Históricas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50C878;
+            --accent-color: #E94B3C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #3a7bc8);
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .recipe-image {
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .ingredient-card, .section-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+        
+        .badge {
+            font-size: 0.8rem;
+        }
+        
+        .preparation-step {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .preparation-step:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="h4 mb-0">Sabores e Sabores</h1>
+                    <p class="mb-0">Livro de Receitas Históricas</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4" id="recipeDetailsContainer">
+        <!-- Conteúdo será carregado dinamicamente -->
+        <div class="text-center mt-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+            <p>Carregando detalhes da receita...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para obter dados do localStorage
+        function getData() {
+            const defaultData = {
+                "recipes": [
+                    {
+                        "id": 1,
+                        "title": "Pão de Açúcar Medieval",
+                        "description": "Receita tradicional dos tempos medievais com ingredientes simples",
+                        "historicalPeriod": "Idade Média",
+                        "culture": "Europeia",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Pão+de+Açúcar+Medieval",
+                        "history": "Esta receita remonta ao período medieval europeu, quando o açúcar era um produto raro e caro, acessível apenas às classes mais abastadas. O 'pão de açúcar' era uma denominação para pães que continham açúcar ou mel como adoçante, diferenciando-se dos pães comuns feitos apenas com ingredientes básicos.",
+                        "originalIngredients": [
+                            { "name": "Farinha antiga", "amount": "1 xícara" },
+                            { "name": "Mel de engenho", "amount": "3 colheres" },
+                            { "name": "Ervas aromáticas", "amount": "a gosto" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Farinha de trigo", "amount": "1 xícara", "price": "R$ 2,50", "location": "Mercado A" },
+                            { "name": "Mel", "amount": "3 colheres", "price": "R$ 8,00", "location": "Mercado B" },
+                            { "name": "Ervas frescas", "amount": "a gosto", "price": "R$ 3,00", "location": "Mercado C" }
+                        ],
+                        "preparationOriginal": "Misture todos os ingredientes e deixe descansar por 30 minutos. Originalmente cozido em forno de barro por aproximadamente 45 minutos.",
+                        "preparationModern": "1. Pré-aqueça o forno a 180°C\n2. Misture os ingredientes secos em uma vasilha\n3. Adicione os líquidos e misture até formar uma massa homogênea\n4. Deixe descansar por 30 minutos\n5. Asse por 40-45 minutos em forno preaquecido",
+                        "nutritionalInfo": "Rico em carboidratos e vitaminas do complexo B, esta receita fornece energia necessária para as atividades diárias. Contém também fibras provenientes dos grãos integrais utilizados na farinha antiga.",
+                        "context": "Este pão era consumido por camponeses e nobres, sendo um alimento básico na dieta medieval. O açúcar, quando disponível, era considerado um produto de luxo e era utilizado em ocasiões especiais. A forma de preparo em forno de barro era comum nas cozinhas medievais, refletindo as técnicas culinárias da época.",
+                        "whoPrepared": "Principalmente mulheres da casa, com variações conforme a condição social",
+                        "whoConsumed": "Toda a família, com variações conforme a classe social",
+                        "rituals": "Algumas variações deste pão eram preparadas em festividades religiosas e datas comemorativas",
+                        "reflection": "Pense sobre como a comida se relaciona com a cultura e a história. A forma de preparar alimentos reflete as condições sociais, econômicas e tecnológicas de cada época. Por que é importante conhecer e valorizar os saberes culinários dos nossos antepassados? Porque eles representam um patrimônio cultural que moldou nossos hábitos alimentares atuais. Como podemos ter alimentos melhores hoje e no futuro? Aprendendo com as técnicas do passado e combinando com os conhecimentos e tecnologias atuais."
+                    },
+                    {
+                        "id": 2,
+                        "title": "Mingau dos Primeiros Povos",
+                        "description": "Receita ancestral dos povos indígenas brasileiros",
+                        "historicalPeriod": "Primeiros Povos",
+                        "culture": "Indígena",
+                        "difficulty": "Fácil",
+                        "image": "https://via.placeholder.com/800x400/E94B3C/FFFFFF?text=Mingau+dos+Primeiros+Povos",
+                        "history": "Esta receita ancestral dos povos indígenas brasileiros baseia-se no aproveitamento de ingredientes da floresta tropical. A mandioca, principal ingrediente, era fundamental na dieta das populações nativas e seu processamento envolvia técnicas sofisticadas de extração de polvilho.",
+                        "originalIngredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras" },
+                            { "name": "Coco ralado", "amount": "1 xícara" },
+                            { "name": "Mel de abelha", "amount": "2 colheres" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras", "price": "R$ 4,00", "location": "Mercado A" },
+                            { "name": "Coco ralado", "amount": "1 xícara", "price": "R$ 3,50", "location": "Mercado B" },
+                            { "name": "Mel", "amount": "2 colheres", "price": "R$ 8,00", "location": "Mercado C" }
+                        ],
+                        "preparationOriginal": "Misture a farinha com o coco e adicione água morna lentamente, mexendo constantemente. Adoce com mel. Originalmente servido em cerimônias religiosas e festividades comunitárias.",
+                        "preparationModern": "1. Em uma panela, misture a farinha de mandioca com o coco\n2. Adicione água morna gradualmente, mexendo sem parar\n3. Continue mexendo até obter uma consistência cremosa\n4. Adoce com mel a gosto\n5. Sirva quente",
+                        "nutritionalInfo": "Fonte de carboidratos e gorduras saudáveis provenientes do coco. Rico em fibras e minerais como potássio e magnésio.",
+                        "context": "Este mingau era preparado em cerimônias e festividades, simbolizando união e partilha. O processo de preparação era coletivo, envolvendo várias famílias da comunidade.",
+                        "whoPrepared": "Mulheres da aldeia, especialmente as mais experientes",
+                        "whoConsumed": "Toda a comunidade, especialmente durante cerimônias e celebrações",
+                        "rituals": "Preparado em ocasiões especiais como iniciações, celebrações sazonais e ritos de passagem",
+                        "reflection": "A conexão com a natureza era fundamental na cultura indígena. Cada ingrediente tinha um significado espiritual além do valor nutricional. Valorizar o passado significa reconhecer a sabedoria milenar sobre aproveitamento sustentável dos recursos naturais. O futuro da alimentação pode aprender com essa sabedoria ancestral para criar sistemas mais sustentáveis."
+                    },
+                    {
+                        "id": 3,
+                        "title": "Feijoada da Primeira República",
+                        "description": "Receita popularizada durante a Primeira República Brasileira",
+                        "historicalPeriod": "Primeira República",
+                        "culture": "Brasileira",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/800x400/50C878/FFFFFF?text=Feijoada+da+Primeira+República",
+                        "history": "A feijoada ganhou destaque durante a Primeira República como prato nacional, unindo influências africanas, indígenas e europeias. Sua origem remonta às casas-grandes, onde escravizados preparavam refeições com sobras de carne, demonstrando criatividade e aproveitamento dos recursos disponíveis.",
+                        "originalIngredients": [
+                            { "name": "Feijão preto", "amount": "500g" },
+                            { "name": "Carne de porco defumada", "amount": "300g" },
+                            { "name": "Linguiça artesanal", "amount": "200g" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Feijão preto", "amount": "500g", "price": "R$ 6,00", "location": "Mercado A" },
+                            { "name": "Carne seca", "amount": "300g", "price": "R$ 25,00", "location": "Mercado B" },
+                            { "name": "Linguiça", "amount": "200g", "price": "R$ 12,00", "location": "Mercado C" }
+                        ],
+                        "preparationOriginal": "Deixe a carne de molho por 24h. Cozinhe o feijão com as carnes em grandes panelas comunitárias. Originalmente preparada em comunidades para celebrar e unir famílias.",
+                        "preparationModern": "1. Deixe a carne seca de molho por 24h\n2. Em uma panela grande, cozinhe o feijão com água até ficar macio\n3. Adicione as carnes e continue o cozimento\n4. Tempere com alho, cebola e louro\n5. Cozinhe por mais 45 minutos até obter o ponto desejado",
+                        "nutritionalInfo": "Fonte de proteínas animais e vegetais, ferro e fibras. Rico em vitaminas do complexo B provenientes das carnes curtidas.",
+                        "context": "Preparada em comunidades para celebrar e unir famílias, tornou-se símbolo da identidade brasileira. Durante a Primeira República, foi promovida como prato nacional que unificava as diversas origens culturais do país.",
+                        "whoPrepared": "Famílias brasileiras de todas as classes sociais",
+                        "whoConsumed": "Toda a população, especialmente em domingos e feriados",
+                        "rituals": "Consumida tradicionalmente aos domingos como refeição de confraternização familiar",
+                        "reflection": "A feijoada representa a miscigenação cultural do Brasil. Cada ingrediente tem uma história de superação e adaptação. Conhecer essa história nos ajuda a valorizar a diversidade cultural. Para ter alimentos melhores no futuro, precisamos resgatar essa diversidade e combinar com práticas mais saudáveis e sustentáveis."
+                    }
+                ]
+            };
+            
+            return JSON.parse(localStorage.getItem('recipeAppData') || JSON.stringify(defaultData));
+        }
+
+        // Função para salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('recipeAppData', JSON.stringify(data));
+        }
+
+        // Função para renderizar os detalhes da receita
+        function renderRecipeDetails(recipe) {
+            const container = document.getElementById('recipeDetailsContainer');
+            
+            container.innerHTML = `
+                <div class="row">
+                    <div class="col-md-8">
+                        <img src="${recipe.image}" alt="${recipe.title}" class="recipe-image w-100">
+                        
+                        <div class="d-flex justify-content-between align-items-start mt-3">
+                            <div>
+                                <h1 class="mb-2">${recipe.title}</h1>
+                                <div class="d-flex gap-2">
+                                    <span class="badge bg-primary">${recipe.historicalPeriod}</span>
+                                    <span class="badge bg-success">${recipe.culture}</span>
+                                    <span class="badge bg-warning text-dark">${recipe.difficulty}</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="prepareRecipeBtn">
+                                <i class="fas fa-play-circle"></i> Preparar Receita
+                            </button>
+                        </div>
+                        
+                        <!-- Descrição -->
+                        <div class="section-card">
+                            <h4>Descrição</h4>
+                            <p>${recipe.description}</p>
+                        </div>
+                        
+                        <!-- Histórico -->
+                        <div class="section-card">
+                            <h4>Histórico</h4>
+                            <p>${recipe.history}</p>
+                            <button class="btn btn-outline-primary btn-sm" id="learnMoreBtn">
+                                <i class="fas fa-book-open"></i> Saiba mais sobre o período
+                            </button>
+                        </div>
+                        
+                        <!-- Ingredientes -->
+                        <div class="section-card">
+                            <h4>Ingredientes</h4>
+                            
+                            <h5>Originais:</h5>
+                            <ul class="list-group mb-3">
+                                ${recipe.originalIngredients.map(ing => `
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        ${ing.name}
+                                        <span class="badge bg-secondary">${ing.amount}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            
+                            <h5>Adaptados para Hoje:</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Ingrediente</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço</th>
+                                            <th>Localização</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${recipe.modernIngredients.map(ing => `
+                                            <tr>
+                                                <td>${ing.name}</td>
+                                                <td>${ing.amount}</td>
+                                                <td>${ing.price || '-'}</td>
+                                                <td>${ing.location || '-'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Modo de Preparo -->
+                        <div class="section-card">
+                            <h4>Modo de Preparo</h4>
+                            
+                            <h5>Original:</h5>
+                            <p>${recipe.preparationOriginal}</p>
+                            
+                            <h5>Adaptado (Atual):</h5>
+                            <div>
+                                ${recipe.preparationModern.split('\n').map(step => `
+                                    <div class="preparation-step">${step.replace(/^\d+\.\s*/, '')}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <!-- Informações Nutricionais -->
+                        <div class="section-card">
+                            <h4>Informações Nutricionais</h4>
+                            <p>${recipe.nutritionalInfo}</p>
+                        </div>
+                        
+                        <!-- Contexto Histórico -->
+                        <div class="section-card">
+                            <h4>Contexto Histórico</h4>
+                            <p>${recipe.context}</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <h6>Origem e Contexto Social e Cultural</h6>
+                                    <p>Como era a vida das pessoas naquela época? Por que essa receita era importante?</p>
+                                    <p>${recipe.context}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Importância dos Ingredientes</h6>
+                                    <p>Qual a relevância de cada um dos ingredientes para aquele povo?</p>
+                                    ${recipe.originalIngredients.map(ing => `
+                                        <p><strong>${ing.name}:</strong> Era importante porque...</p>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <h6>Quem Preparava e Quem Consumia</h6>
+                                    <p><strong>Preparava:</strong> ${recipe.whoPrepared}</p>
+                                    <p><strong>Consumia:</strong> ${recipe.whoConsumed}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Rituais ou Festividades</h6>
+                                    <p>${recipe.rituals}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reflexão -->
+                        <div class="section-card">
+                            <h4>Reflexão</h4>
+                            <h6>Ligando os pontos</h6>
+                            <p>Pense sobre como a comida se relaciona com a cultura e a história.</p>
+                            
+                            <h6>Valorizando o passado</h6>
+                            <p>Por que é importante conhecer e valorizar os saberes culinários dos nossos antepassados?</p>
+                            
+                            <h6>Pensando no futuro</h6>
+                            <p>Como podemos ter alimentos melhores hoje e no futuro?</p>
+                            
+                            <p>${recipe.reflection}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-utensils text-primary"></i> Detalhes da Receita</h5>
+                                <p class="card-text">
+                                    <strong>Período:</strong> ${recipe.historicalPeriod}<br>
+                                    <strong>Cultura:</strong> ${recipe.culture}<br>
+                                    <strong>Dificuldade:</strong> ${recipe.difficulty}<br>
+                                    <strong>Origem:</strong> ${recipe.historicalPeriod} (${recipe.culture})<br>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-star text-warning"></i> Avaliação</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="fs-4 me-2">4.5</div>
+                                    <div>
+                                        <div class="rating">
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star-half-alt text-warning"></i>
+                                        </div>
+                                        <small class="text-muted">Baseado em 12 avaliações</small>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary w-100 mt-2" id="rateRecipeBtn">
+                                    <i class="fas fa-star"></i> Avaliar Receita
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-paint-brush text-success"></i> Ilustrações</h5>
+                                <p>Adicione ilustrações para complementar sua receita:</p>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-success btn-sm" id="addIllustrationBtn">
+                                        <i class="fas fa-plus"></i> Adicionar Ilustração
+                                    </button>
+                                    <button class="btn btn-outline-info btn-sm" id="viewGalleryBtn">
+                                        <i class="fas fa-image"></i> Ver Galeria
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Adicionar eventos aos botões
+            document.getElementById('prepareRecipeBtn').addEventListener('click', function() {
+                alert('Iniciando preparação da receita!\n\nNa versão completa, isso iniciaria um guia passo a passo para preparar a receita.');
+            });
+            
+            document.getElementById('learnMoreBtn').addEventListener('click', function() {
+                alert('Abrindo informações sobre o período histórico!\n\nNa versão completa, isso abriria uma página com mais informações sobre o período histórico da receita.');
+            });
+            
+            document.getElementById('rateRecipeBtn').addEventListener('click', function() {
+                const rating = prompt('Avalie a receita de 1 a 5 estrelas:');
+                if (rating && !isNaN(rating) && rating >= 1 && rating <= 5) {
+                    alert(`Receita avaliada com ${rating} estrelas! Obrigado pela sua avaliação.`);
+                }
+            });
+            
+            document.getElementById('addIllustrationBtn').addEventListener('click', function() {
+                alert('Abrindo ferramenta de desenho!\n\nNa versão completa, isso abriria uma ferramenta para criar ilustrações para a receita.');
+            });
+            
+            document.getElementById('viewGalleryBtn').addEventListener('click', function() {
+                alert('Abrindo galeria de ilustrações!\n\nNa versão completa, isso mostraria as ilustrações associadas a esta receita.');
+            });
+        }
+
+        // Função para obter parâmetros da URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(window.location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Função para inicializar a página
+        function init() {
+            const recipeId = getUrlParameter('id');
+            
+            if (!recipeId) {
+                document.getElementById('recipeDetailsContainer').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Receita não encontrada</h4>
+                        <p>Não foi possível encontrar os detalhes da receita solicitada.</p>
+                        <a href="index.html" class="btn btn-primary">Voltar para a página inicial</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const data = getData();
+            const recipe = data.recipes.find(r => r.id == recipeId);
+            
+            if (!recipe) {
+                document.getElementById('recipeDetailsContainer').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Receita não encontrada</h4>
+                        <p>Não foi possível encontrar os detalhes da receita solicitada.</p>
+                        <a href="index.html" class="btn btn-primary">Voltar para a página inicial</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            renderRecipeDetails(recipe);
+            
+            // Função para voltar à página principal
+            document.querySelector('.btn-outline-light').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Inicializar quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>

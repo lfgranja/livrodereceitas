@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho em Equipe - Livro de Receitas Históricas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50C878;
+            --accent-color: #E94B3C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #3a7bc8);
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #43a866;
+            border-color: #43a866;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #d14335;
+            border-color: #d14335;
+        }
+        
+        .member-badge {
+            background-color: #e9ecef;
+            border-radius: 20px;
+            padding: 5px 12px;
+            margin: 3px;
+            display: inline-block;
+        }
+        
+        .team-status-active {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: bold;
+        }
+        
+        .team-status-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="h4 mb-0">Sabores e Sabores</h1>
+                    <p class="mb-0">Livro de Receitas Históricas</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Trabalho em Equipe</h2>
+        
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            Trabalhe em equipe para criar o melhor livro de receitas históricas! Cada equipe pode colaborar na criação e pesquisa de receitas.
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <button class="btn btn-primary btn-lg w-100" id="createTeamBtn">
+                    <i class="fas fa-plus-circle me-2"></i> Criar Nova Equipe
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-outline-primary btn-lg w-100" id="joinTeamBtn">
+                    <i class="fas fa-user-plus me-2"></i> Entrar em Equipe
+                </button>
+            </div>
+        </div>
+        
+        <h3 class="mb-4">Suas Equipes</h3>
+        
+        <div class="row" id="teamsContainer">
+            <!-- Será populado dinamicamente -->
+        </div>
+    </div>
+
+    <!-- Modal Criar Equipe -->
+    <div class="modal fade" id="createTeamModal" tabindex="-1" aria-labelledby="createTeamModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createTeamModalLabel">Criar Nova Equipe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createTeamForm">
+                        <div class="mb-3">
+                            <label class="form-label">Nome da Nova Equipe *</label>
+                            <input type="text" class="form-control" id="teamName" placeholder="Ex: Equipe dos Sabores Antigos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrição (Opcional)</label>
+                            <textarea class="form-control" id="teamDescription" rows="2" placeholder="Descreva o objetivo da equipe..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Senha da Equipe (Opcional)</label>
+                            <input type="password" class="form-control" id="teamPassword" placeholder="Para acesso restrito">
+                            <div class="form-text">Se especificada, outros usuários precisarão desta senha para entrar na equipe.</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveTeamBtn">Criar Equipe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Entrar em Equipe -->
+    <div class="modal fade" id="joinTeamModal" tabindex="-1" aria-labelledby="joinTeamModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="joinTeamModalLabel">Entrar em Equipe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="joinTeamForm">
+                        <div class="mb-3">
+                            <label class="form-label">Código ou Nome da Equipe *</label>
+                            <input type="text" class="form-control" id="teamCode" placeholder="Digite o código ou nome da equipe" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Senha da Equipe (se necessário)</label>
+                            <input type="password" class="form-control" id="joinPassword" placeholder="Senha (se a equipe for privada)">
+                        </div>
+                    </form>
+                    
+                    <h6 class="mt-4">Equipes Públicas Disponíveis:</h6>
+                    <div class="list-group" id="availableTeams">
+                        <!-- Será populado dinamicamente -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="joinTeamSubmitBtn">Entrar na Equipe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes da Equipe -->
+    <div class="modal fade" id="teamDetailsModal" tabindex="-1" aria-labelledby="teamDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="teamDetailsModalLabel">Detalhes da Equipe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="teamDetailsContent">
+                        <!-- Será populado dinamicamente -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="addRecipeToTeamBtn">
+                        <i class="fas fa-plus-circle me-1"></i> Adicionar Receita
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para obter dados do localStorage
+        function getData() {
+            const defaultData = {
+                "teams": [
+                    {
+                        "id": 1,
+                        "name": "Equipe dos Sabores",
+                        "description": "Equipe focada em receitas da Idade Média",
+                        "status": "ativo",
+                        "members": [
+                            {"id": 1, "name": "Ana Silva", "role": "Líder"},
+                            {"id": 2, "name": "Carlos Oliveira", "role": "Membro"},
+                            {"id": 3, "name": "Maria Santos", "role": "Membro"},
+                            {"id": 4, "name": "Roberto Costa", "role": "Membro"}
+                        ],
+                        "recipes": [
+                            {"id": 1, "title": "Pão de Açúcar Medieval", "period": "Idade Média"},
+                            {"id": 2, "title": "Mingau dos Primeiros Povos", "period": "Primeiros Povos"},
+                            {"id": 3, "title": "Feijoada da Primeira República", "period": "Primeira República"}
+                        ],
+                        "createdAt": "2025-10-01",
+                        "password": ""
+                    },
+                    {
+                        "id": 2,
+                        "name": "Historiadores em Pratos",
+                        "description": "Equipe especializada em receitas da Primeira República",
+                        "status": "ativo",
+                        "members": [
+                            {"id": 5, "name": "João Pereira", "role": "Líder"},
+                            {"id": 6, "name": "Fernanda Lima", "role": "Membro"},
+                            {"id": 7, "name": "Pedro Alves", "role": "Membro"}
+                        ],
+                        "recipes": [
+                            {"id": 3, "title": "Feijoada da Primeira República", "period": "Primeira República"}
+                        ],
+                        "createdAt": "2025-10-05",
+                        "password": ""
+                    }
+                ],
+                "recipes": [
+                    {
+                        "id": 1,
+                        "title": "Pão de Açúcar Medieval",
+                        "description": "Receita tradicional dos tempos medievais com ingredientes simples",
+                        "historicalPeriod": "Idade Média",
+                        "culture": "Europeia",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Pão+Medieval"
+                    },
+                    {
+                        "id": 2,
+                        "title": "Mingau dos Primeiros Povos",
+                        "description": "Receita ancestral dos povos indígenas brasileiros",
+                        "historicalPeriod": "Primeiros Povos",
+                        "culture": "Indígena",
+                        "difficulty": "Fácil",
+                        "image": "https://via.placeholder.com/300x200/E94B3C/FFFFFF?text=Mingau+Indígena"
+                    },
+                    {
+                        "id": 3,
+                        "title": "Feijoada da Primeira República",
+                        "description": "Receita popularizada durante a Primeira República Brasileira",
+                        "historicalPeriod": "Primeira República",
+                        "culture": "Brasileira",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/300x200/50C878/FFFFFF?text=Feijoada"
+                    }
+                ]
+            };
+            
+            return JSON.parse(localStorage.getItem('recipeAppData') || JSON.stringify(defaultData));
+        }
+
+        // Função para salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('recipeAppData', JSON.stringify(data));
+        }
+
+        // Função para renderizar equipes
+        function renderTeams() {
+            const data = getData();
+            const container = document.getElementById('teamsContainer');
+            container.innerHTML = '';
+            
+            if (data.teams.length === 0) {
+                container.innerHTML = `
+                    <div class="col-md-12">
+                        <div class="team-card text-center">
+                            <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                            <h4>Você ainda não faz parte de nenhuma equipe</h4>
+                            <p class="text-muted">Crie uma nova equipe ou entre em uma existente para começar a colaborar.</p>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                <button class="btn btn-primary me-md-2" id="createTeamFromEmpty">
+                                    <i class="fas fa-plus-circle me-1"></i> Criar Equipe
+                                </button>
+                                <button class="btn btn-outline-primary" id="joinTeamFromEmpty">
+                                    <i class="fas fa-user-plus me-1"></i> Entrar em Equipe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Adicionar eventos aos botões
+                document.getElementById('createTeamFromEmpty').addEventListener('click', function() {
+                    const modal = new bootstrap.Modal(document.getElementById('createTeamModal'));
+                    modal.show();
+                });
+                
+                document.getElementById('joinTeamFromEmpty').addEventListener('click', function() {
+                    const modal = new bootstrap.Modal(document.getElementById('joinTeamModal'));
+                    modal.show();
+                });
+                
+                return;
+            }
+            
+            data.teams.forEach(team => {
+                const teamCard = document.createElement('div');
+                teamCard.className = 'col-md-6 mb-4';
+                teamCard.innerHTML = `
+                    <div class="team-card">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h4 class="mb-1">${team.name}</h4>
+                                <span class="team-status-${team.status}">${team.status === 'ativo' ? 'Ativo' : 'Inativo'}</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary view-team-details" data-team-id="${team.id}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        
+                        <p class="text-muted mb-3">${team.description || 'Sem descrição'}</p>
+                        
+                        <div class="mb-3">
+                            <h6>Membros (${team.members.length})</h6>
+                            <div class="d-flex flex-wrap">
+                                ${team.members.map(member => `
+                                    <span class="member-badge">
+                                        ${member.name} ${member.role === 'Líder' ? '<i class="fas fa-crown text-warning"></i>' : ''}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h6>Receitas (${team.recipes.length})</h6>
+                            ${team.recipes.length > 0 ? `
+                                <ul class="list-unstyled">
+                                    ${team.recipes.map(recipe => `
+                                        <li class="mb-1">
+                                            <i class="fas fa-utensils me-1 text-primary"></i> 
+                                            ${recipe.title} 
+                                            <span class="badge bg-secondary">${recipe.period}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            ` : `
+                                <p class="text-muted">Nenhuma receita adicionada ainda.</p>
+                            `}
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-primary w-100 view-team-btn" data-team-id="${team.id}">
+                                <i class="fas fa-eye me-1"></i> Ver Detalhes
+                            </button>
+                            <button class="btn btn-sm btn-outline-success w-100 add-recipe-btn" data-team-id="${team.id}">
+                                <i class="fas fa-plus me-1"></i> Adicionar Receita
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(teamCard);
+            });
+            
+            // Adicionar eventos aos botões
+            document.querySelectorAll('.view-team-btn, .view-team-details').forEach(button => {
+                button.addEventListener('click', function() {
+                    const teamId = this.getAttribute('data-team-id');
+                    showTeamDetails(teamId);
+                });
+            });
+            
+            document.querySelectorAll('.add-recipe-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const teamId = this.getAttribute('data-team-id');
+                    addRecipeToTeam(teamId);
+                });
+            });
+        }
+
+        // Função para renderizar equipes disponíveis
+        function renderAvailableTeams() {
+            const data = getData();
+            const container = document.getElementById('availableTeams');
+            container.innerHTML = '';
+            
+            const availableTeams = data.teams.filter(team => !team.password); // Somente equipes públicas
+            
+            if (availableTeams.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center p-3">
+                        <p class="text-muted mb-0">Nenhuma equipe pública disponível no momento.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            availableTeams.forEach(team => {
+                const teamItem = document.createElement('a');
+                teamItem.href = '#';
+                teamItem.className = 'list-group-item list-group-item-action';
+                teamItem.setAttribute('data-team-id', team.id);
+                teamItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">${team.name}</h6>
+                            <small>${team.members.length} membros • ${team.recipes.length} receitas</small>
+                        </div>
+                        <span class="badge bg-primary">Pública</span>
+                    </div>
+                `;
+                container.appendChild(teamItem);
+                
+                // Adicionar evento para entrar na equipe
+                teamItem.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const teamId = this.getAttribute('data-team-id');
+                    joinTeamById(teamId);
+                });
+            });
+        }
+
+        // Função para mostrar detalhes da equipe
+        function showTeamDetails(teamId) {
+            const data = getData();
+            const team = data.teams.find(t => t.id == teamId);
+            
+            if (!team) {
+                alert('Equipe não encontrada.');
+                return;
+            }
+            
+            const content = document.getElementById('teamDetailsContent');
+            content.innerHTML = `
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>${team.name}</h4>
+                        <p>${team.description || 'Sem descrição'}</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-calendar-alt me-2 text-primary"></i> Criada em</h6>
+                                <p>${new Date(team.createdAt).toLocaleDateString('pt-BR')}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-users me-2 text-success"></i> Status</h6>
+                                <p><span class="team-status-${team.status}">${team.status === 'ativo' ? 'Ativo' : 'Inativo'}</span></p>
+                            </div>
+                        </div>
+                        
+                        <h5><i class="fas fa-users me-2 text-info"></i> Membros (${team.members.length})</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Função</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${team.members.map(member => `
+                                        <tr>
+                                            <td>${member.name}</td>
+                                            <td>${member.role} ${member.role === 'Líder' ? '<i class="fas fa-crown text-warning"></i>' : ''}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <h5><i class="fas fa-book me-2 text-warning"></i> Receitas (${team.recipes.length})</h5>
+                        ${team.recipes.length > 0 ? `
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Período</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${team.recipes.map(recipe => {
+                                            const fullRecipe = data.recipes.find(r => r.id == recipe.id);
+                                            return `
+                                                <tr>
+                                                    <td>${recipe.title}</td>
+                                                    <td>${recipe.period}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary view-recipe-btn" data-recipe-id="${recipe.id}">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            `;
+                                        }).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ` : `
+                            <p class="text-muted">Nenhuma receita adicionada ainda.</p>
+                        `}
+                    </div>
+                </div>
+            `;
+            
+            // Adicionar eventos para visualizar receitas
+            document.querySelectorAll('.view-recipe-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const recipeId = this.getAttribute('data-recipe-id');
+                    window.location.href = `recipe-details.html?id=${recipeId}`;
+                });
+            });
+            
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById('teamDetailsModal'));
+            document.getElementById('teamDetailsModalLabel').textContent = `Detalhes da Equipe: ${team.name}`;
+            modal.show();
+        }
+
+        // Função para criar nova equipe
+        function createTeam() {
+            const name = document.getElementById('teamName').value.trim();
+            const description = document.getElementById('teamDescription').value.trim();
+            const password = document.getElementById('teamPassword').value;
+            
+            if (!name) {
+                alert('Por favor, informe o nome da equipe.');
+                return;
+            }
+            
+            const data = getData();
+            
+            // Verificar se já existe uma equipe com o mesmo nome
+            if (data.teams.some(team => team.name.toLowerCase() === name.toLowerCase())) {
+                alert('Já existe uma equipe com este nome. Por favor, escolha outro nome.');
+                return;
+            }
+            
+            const newTeam = {
+                id: Date.now(),
+                name: name,
+                description: description,
+                status: 'ativo',
+                members: [
+                    {
+                        id: Date.now() + 1,
+                        name: 'Você', // Em uma implementação real, seria o nome do usuário logado
+                        role: 'Líder'
+                    }
+                ],
+                recipes: [],
+                createdAt: new Date().toISOString().split('T')[0],
+                password: password
+            };
+            
+            data.teams.push(newTeam);
+            saveData(data);
+            
+            // Fechar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('createTeamModal'));
+            modal.hide();
+            
+            // Resetar formulário
+            document.getElementById('createTeamForm').reset();
+            
+            // Atualizar lista de equipes
+            renderTeams();
+            
+            alert('Equipe criada com sucesso!');
+        }
+
+        // Função para entrar em equipe
+        function joinTeam() {
+            const code = document.getElementById('teamCode').value.trim();
+            const password = document.getElementById('joinPassword').value;
+            
+            if (!code) {
+                alert('Por favor, informe o código ou nome da equipe.');
+                return;
+            }
+            
+            const data = getData();
+            let team = data.teams.find(t => 
+                t.id == code || 
+                t.name.toLowerCase() === code.toLowerCase()
+            );
+            
+            // Se não encontrou por ID ou nome, tentar encontrar por código
+            if (!team) {
+                team = data.teams.find(t => t.id.toString() === code);
+            }
+            
+            if (!team) {
+                alert('Equipe não encontrada. Verifique o código ou nome informado.');
+                return;
+            }
+            
+            // Verificar senha se necessário
+            if (team.password && team.password !== password) {
+                alert('Senha incorreta para esta equipe.');
+                return;
+            }
+            
+            // Verificar se o usuário já está na equipe
+            if (team.members.some(member => member.name === 'Você')) {
+                alert('Você já faz parte desta equipe.');
+                return;
+            }
+            
+            // Adicionar usuário à equipe
+            team.members.push({
+                id: Date.now() + Math.floor(Math.random() * 1000),
+                name: 'Você', // Em uma implementação real, seria o nome do usuário logado
+                role: 'Membro'
+            });
+            
+            saveData(data);
+            
+            // Fechar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('joinTeamModal'));
+            modal.hide();
+            
+            // Resetar formulário
+            document.getElementById('joinTeamForm').reset();
+            
+            // Atualizar lista de equipes
+            renderTeams();
+            
+            alert(`Você entrou na equipe "${team.name}" com sucesso!`);
+        }
+
+        // Função para entrar em equipe pelo ID (botão "Entrar")
+        function joinTeamById(teamId) {
+            const data = getData();
+            const team = data.teams.find(t => t.id == teamId);
+            
+            if (!team) {
+                alert('Equipe não encontrada.');
+                return;
+            }
+            
+            // Verificar se o usuário já está na equipe
+            if (team.members.some(member => member.name === 'Você')) {
+                alert('Você já faz parte desta equipe.');
+                return;
+            }
+            
+            // Adicionar usuário à equipe
+            team.members.push({
+                id: Date.now() + Math.floor(Math.random() * 1000),
+                name: 'Você', // Em uma implementação real, seria o nome do usuário logado
+                role: 'Membro'
+            });
+            
+            saveData(data);
+            
+            // Fechar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('joinTeamModal'));
+            if (modal) {
+                modal.hide();
+            }
+            
+            // Atualizar lista de equipes
+            renderTeams();
+            
+            alert(`Você entrou na equipe "${team.name}" com sucesso!`);
+        }
+
+        // Função para adicionar receita à equipe
+        function addRecipeToTeam(teamId) {
+            const data = getData();
+            const team = data.teams.find(t => t.id == teamId);
+            
+            if (!team) {
+                alert('Equipe não encontrada.');
+                return;
+            }
+            
+            // Em uma implementação real, isso abriria um modal para selecionar receitas
+            // Por enquanto, vamos simular a adição de uma receita aleatória
+            const availableRecipes = data.recipes.filter(recipe => 
+                !team.recipes.some(r => r.id == recipe.id)
+            );
+            
+            if (availableRecipes.length === 0) {
+                alert('Não há receitas disponíveis para adicionar a esta equipe.');
+                return;
+            }
+            
+            // Selecionar uma receita aleatória
+            const randomRecipe = availableRecipes[Math.floor(Math.random() * availableRecipes.length)];
+            
+            team.recipes.push({
+                id: randomRecipe.id,
+                title: randomRecipe.title,
+                period: randomRecipe.historicalPeriod
+            });
+            
+            saveData(data);
+            
+            // Atualizar exibição
+            renderTeams();
+            
+            alert(`Receita "${randomRecipe.title}" adicionada à equipe "${team.name}"!`);
+        }
+
+        // Função para inicializar a página
+        function init() {
+            // Renderizar equipes
+            renderTeams();
+            
+            // Renderizar equipes disponíveis
+            renderAvailableTeams();
+            
+            // Adicionar eventos
+            document.getElementById('createTeamBtn').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('createTeamModal'));
+                modal.show();
+            });
+            
+            document.getElementById('joinTeamBtn').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('joinTeamModal'));
+                modal.show();
+            });
+            
+            document.getElementById('saveTeamBtn').addEventListener('click', createTeam);
+            
+            document.getElementById('joinTeamSubmitBtn').addEventListener('click', joinTeam);
+            
+            // Evento para voltar à página principal
+            document.querySelector('.btn-outline-light').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+            
+            // Eventos para formulários (Enter key)
+            document.getElementById('teamName').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    createTeam();
+                }
+            });
+            
+            document.getElementById('teamCode').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    joinTeam();
+                }
+            });
+        }
+
+        // Inicializar quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>

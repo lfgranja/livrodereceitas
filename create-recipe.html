@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Receita - Livro de Receitas Históricas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50C878;
+            --accent-color: #E94B3C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #3a7bc8);
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ingredient-group {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f8f9fa;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #43a866;
+            border-color: #43a866;
+        }
+        
+        .btn-outline-danger {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="h4 mb-0">Sabores e Sabores</h1>
+                    <p class="mb-0">Livro de Receitas Históricas</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-4">Criar Nova Receita</h2>
+                
+                <form id="recipeForm">
+                    <div class="form-card">
+                        <h4><i class="fas fa-info-circle text-primary me-2"></i> Informações Básicas</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nome da Receita *</label>
+                                <input type="text" class="form-control" id="recipeName" placeholder="Ex: Pão de Açúcar Colonial" required>
+                                <div class="form-text">O nome original (quando possível) ou um nome adaptado</div>
+                            </div>
+                            
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Período Histórico *</label>
+                                <select class="form-select" id="recipePeriod" required>
+                                    <option value="">Selecione...</option>
+                                    <option>Primeiros Povos</option>
+                                    <option>Idade Média</option>
+                                    <option>Primeira República</option>
+                                    <option>Afroamericana</option>
+                                    <option>Império Romano</option>
+                                    <option>Antigo Egito</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Cultura</label>
+                                <select class="form-select" id="recipeCulture">
+                                    <option value="">Selecione...</option>
+                                    <option>Indígena</option>
+                                    <option>Europeia</option>
+                                    <option>Africana</option>
+                                    <option>Brasileira</option>
+                                    <option>Árabe</option>
+                                    <option>Asiática</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Descrição *</label>
+                            <textarea class="form-control" id="recipeDescription" rows="3" placeholder="Descreva resumidamente a receita e seu contexto histórico" required></textarea>
+                            <div class="form-text">Descreva resumidamente a receita e seu contexto histórico</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Adicionar Imagem (URL)</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="recipeImage" placeholder="https://exemplo.com/imagem.jpg">
+                                <button class="btn btn-outline-secondary" type="button" id="uploadImageButton">
+                                    <i class="fas fa-upload"></i> Enviar
+                                </button>
+                            </div>
+                            <div class="form-text">Cole o link de uma imagem online ou envie uma nova</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h4><i class="fas fa-carrot text-success me-2"></i> Ingredientes</h4>
+                        
+                        <h5>Originais (época histórica)</h5>
+                        <div id="originalIngredients">
+                            <div class="ingredient-group">
+                                <div class="row">
+                                    <div class="col-md-8 mb-2">
+                                        <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                                    </div>
+                                    <div class="col-md-1 mb-2">
+                                        <button type="button" class="btn btn-outline-danger btn-sm remove-ingredient w-100"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
+                            <button type="button" class="btn btn-outline-success" id="addOriginalIngredient">
+                                <i class="fas fa-plus"></i> Adicionar Ingrediente Original
+                            </button>
+                        </div>
+                        
+                        <h5 class="mt-4">Adaptados (atual)</h5>
+                        <div id="modernIngredients">
+                            <div class="ingredient-group">
+                                <div class="row">
+                                    <div class="col-md-5 mb-2">
+                                        <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                                    </div>
+                                    <div class="col-md-2 mb-2">
+                                        <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                                    </div>
+                                    <div class="col-md-2 mb-2">
+                                        <input type="text" class="form-control ingredient-price" placeholder="Preço (R$)">
+                                    </div>
+                                    <div class="col-md-2 mb-2">
+                                        <input type="text" class="form-control ingredient-location" placeholder="Localização">
+                                    </div>
+                                    <div class="col-md-1 mb-2">
+                                        <button type="button" class="btn btn-outline-danger btn-sm remove-ingredient w-100"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button type="button" class="btn btn-outline-success" id="addModernIngredient">
+                                <i class="fas fa-plus"></i> Adicionar Ingrediente Atual
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h4><i class="fas fa-blender text-warning me-2"></i> Modo de Preparo</h4>
+                        
+                        <h5>Original (época histórica)</h5>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="preparationOriginal" rows="4" placeholder="Como era preparado originalmente..."></textarea>
+                            <div class="form-text">Explique passo a passo como preparar a receita na época histórica</div>
+                        </div>
+                        
+                        <h5>Adaptado (atual)</h5>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="preparationModern" rows="4" placeholder="Como adaptar para os dias de hoje..."></textarea>
+                            <div class="form-text">Adapte as instruções para a nossa cozinha, mas tente manter a ideia principal da receita original</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h4><i class="fas fa-info text-info me-2"></i> Informações Históricas</h4>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Origem e Contexto Social e Cultural</label>
+                            <textarea class="form-control" id="recipeOrigin" rows="3" placeholder="Qual a origem da receita? Qual o contexto histórico?"></textarea>
+                            <div class="form-text">Conte a história da receita! De onde ela veio? Quem a comia? Quem a preparava? Em que ocasiões? Qual era a importância dos ingredientes?</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Quem Preparava?</label>
+                                <input type="text" class="form-control" id="whoPrepared" placeholder="Ex: Mulheres da casa, escravos, sacerdotes...">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Quem Consumia?</label>
+                                <input type="text" class="form-control" id="whoConsumed" placeholder="Ex: Nobres, camponeses, todos...">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Rituais ou Festividades</label>
+                            <input type="text" class="form-control" id="rituals" placeholder="Ex: Consumido em cerimônias religiosas...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h4><i class="fas fa-heart text-danger me-2"></i> Informações Nutricionais</h4>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Principais Nutrientes</label>
+                            <textarea class="form-control" id="nutritionalInfo" rows="2" placeholder="Ex: Carboidratos, proteínas, vitaminas..."></textarea>
+                            <div class="form-text">Pesquise sobre os nutrientes que essa receita oferece. Pode ser uma tabela ou uma descrição simples.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h4><i class="fas fa-lightbulb text-warning me-2"></i> Reflexão</h4>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Ligando os Pontos</label>
+                            <textarea class="form-control" id="reflectionConnection" rows="3" placeholder="Pense sobre como a comida se relaciona com a cultura e a história..."></textarea>
+                            <div class="form-text">Pensem sobre como a comida se relaciona com a cultura e a história.</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Valorizando o Passado</label>
+                                <textarea class="form-control" id="reflectionPast" rows="2" placeholder="Por que é importante conhecer e valorizar os saberes culinários dos nossos antepassados?"></textarea> 
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Pensando no Futuro</label>
+                                <textarea class="form-control" id="reflectionFuture" rows="2" placeholder="Como podemos ter alimentos melhores hoje e no futuro?"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="index.html" class="btn btn-outline-secondary me-md-2">
+                            <i class="fas fa-times"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Salvar Receita
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para obter dados do localStorage
+        function getData() {
+            const defaultData = {
+                "recipes": [
+                    {
+                        "id": 1,
+                        "title": "Pão de Açúcar Medieval",
+                        "description": "Receita tradicional dos tempos medievais com ingredientes simples",
+                        "historicalPeriod": "Idade Média",
+                        "culture": "Europeia",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Pão+Medieval",
+                        "history": "Esta receita remonta ao período medieval europeu, quando o açúcar era um produto raro e caro, acessível apenas às classes mais abastadas.",
+                        "ingredients": [
+                            { "name": "Farinha antiga", "amount": "1 xícara" },
+                            { "name": "Mel de engenho", "amount": "3 colheres" },
+                            { "name": "Ervas aromáticas", "amount": "a gosto" }
+                        ],
+                        "originalIngredients": [
+                            { "name": "Farinha antiga", "amount": "1 xícara" },
+                            { "name": "Mel de engenho", "amount": "3 colheres" },
+                            { "name": "Ervas aromáticas", "amount": "a gosto" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Farinha de trigo", "amount": "1 xícara", "price": "R$ 2,50", "location": "Mercado A" },
+                            { "name": "Mel", "amount": "3 colheres", "price": "R$ 8,00", "location": "Mercado B" },
+                            { "name": "Ervas frescas", "amount": "a gosto", "price": "R$ 3,00", "location": "Mercado C" }
+                        ],
+                        "preparation": "Misture todos os ingredientes e deixe descansar por 30 minutos. Originalmente cozido em forno de barro por aproximadamente 45 minutos.",
+                        "preparationOriginal": "Misture todos os ingredientes e deixe descansar por 30 minutos. Originalmente cozido em forno de barro por aproximadamente 45 minutos.",
+                        "preparationModern": "1. Pré-aqueça o forno a 180°C\n2. Misture os ingredientes secos em uma vasilha\n3. Adicione os líquidos e misture até formar uma massa homogênea\n4. Deixe descansar por 30 minutos\n5. Asse por 40-45 minutos em forno preaquecido",
+                        "nutritionalInfo": "Rico em carboidratos e vitaminas do complexo B",
+                        "context": "Este pão era consumido por camponeses e nobres, sendo um alimento básico na dieta medieval.",
+                        "whoPrepared": "Principalmente mulheres da casa",
+                        "whoConsumed": "Toda a família",
+                        "rituals": "Em ocasiões especiais e festividades",
+                        "reflection": "Pense sobre como a comida se relaciona com a cultura e a história. A forma de preparar alimentos reflete as condições sociais, econômicas e tecnológicas de cada época."
+                    }
+                ],
+                "prices": [
+                    { "id": 1, "ingredient": "Farinha de trigo", "price": "R$ 2,50", "location": "Mercado A", "date": "10/10/2025" },
+                    { "id": 2, "ingredient": "Mel", "price": "R$ 8,00", "location": "Mercado B", "date": "12/10/2025" },
+                    { "id": 3, "ingredient": "Ervas frescas", "price": "R$ 3,00", "location": "Mercado C", "date": "11/10/2025" }
+                ]
+            };
+            
+            return JSON.parse(localStorage.getItem('recipeAppData') || JSON.stringify(defaultData));
+        }
+
+        // Função para salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('recipeAppData', JSON.stringify(data));
+        }
+
+        // Função para adicionar ingrediente
+        function addIngredient(containerId) {
+            const container = document.getElementById(containerId);
+            const newRow = document.createElement('div');
+            newRow.className = 'ingredient-group';
+            
+            if (containerId === 'modernIngredients') {
+                newRow.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-5 mb-2">
+                            <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <input type="text" class="form-control ingredient-price" placeholder="Preço (R$)">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <input type="text" class="form-control ingredient-location" placeholder="Localização">
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button type="button" class="btn btn-outline-danger btn-sm remove-ingredient w-100"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                newRow.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-8 mb-2">
+                            <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button type="button" class="btn btn-outline-danger btn-sm remove-ingredient w-100"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.appendChild(newRow);
+            
+            // Adicionar evento para remover ingrediente
+            newRow.querySelector('.remove-ingredient').addEventListener('click', function() {
+                container.removeChild(newRow);
+            });
+        }
+
+        // Função para inicializar o formulário
+        function init() {
+            // Adicionar eventos para os botões de adicionar ingredientes
+            document.getElementById('addOriginalIngredient').addEventListener('click', function() {
+                addIngredient('originalIngredients');
+            });
+            
+            document.getElementById('addModernIngredient').addEventListener('click', function() {
+                addIngredient('modernIngredients');
+            });
+            
+            // Adicionar eventos para remover ingredientes (delegação de eventos)
+            document.getElementById('originalIngredients').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-ingredient')) {
+                    const group = e.target.closest('.ingredient-group');
+                    if (group && document.querySelectorAll('#originalIngredients .ingredient-group').length > 1) {
+                        group.remove();
+                    } else {
+                        alert('É necessário manter pelo menos um ingrediente original.');
+                    }
+                }
+            });
+            
+            document.getElementById('modernIngredients').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-ingredient')) {
+                    const group = e.target.closest('.ingredient-group');
+                    if (group && document.querySelectorAll('#modernIngredients .ingredient-group').length > 1) {
+                        group.remove();
+                    } else {
+                        alert('É necessário manter pelo menos um ingrediente adaptado.');
+                    }
+                }
+            });
+            
+            // Evento para o envio do formulário
+            document.getElementById('recipeForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar campos obrigatórios
+                const title = document.getElementById('recipeName').value.trim();
+                const period = document.getElementById('recipePeriod').value;
+                const description = document.getElementById('recipeDescription').value.trim();
+                
+                if (!title || !period || !description) {
+                    alert('Por favor, preencha os campos obrigatórios: Nome da Receita, Período Histórico e Descrição.');
+                    return;
+                }
+                
+                // Coletar dados do formulário
+                const data = getData();
+                
+                // Coletar ingredientes originais
+                const originalIngredients = [];
+                const originalGroups = document.querySelectorAll('#originalIngredients .ingredient-group');
+                originalGroups.forEach(group => {
+                    const name = group.querySelector('.ingredient-name').value.trim();
+                    const amount = group.querySelector('.ingredient-amount').value.trim();
+                    if (name && amount) {
+                        originalIngredients.push({ name, amount });
+                    }
+                });
+                
+                // Coletar ingredientes modernos
+                const modernIngredients = [];
+                const modernGroups = document.querySelectorAll('#modernIngredients .ingredient-group');
+                modernGroups.forEach(group => {
+                    const name = group.querySelector('.ingredient-name').value.trim();
+                    const amount = group.querySelector('.ingredient-amount').value.trim();
+                    const price = group.querySelector('.ingredient-price').value.trim();
+                    const location = group.querySelector('.ingredient-location').value.trim();
+                    if (name && amount) {
+                        modernIngredients.push({ name, amount, price, location });
+                    }
+                });
+                
+                // Criar nova receita
+                const newRecipe = {
+                    id: Date.now(),
+                    title: title,
+                    description: description,
+                    historicalPeriod: period,
+                    culture: document.getElementById('recipeCulture').value,
+                    difficulty: 'Médio', // Poderia ser selecionável
+                    image: document.getElementById('recipeImage').value || 'https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Receita+Nova',
+                    history: document.getElementById('recipeOrigin').value,
+                    originalIngredients: originalIngredients,
+                    modernIngredients: modernIngredients,
+                    preparationOriginal: document.getElementById('preparationOriginal').value,
+                    preparationModern: document.getElementById('preparationModern').value,
+                    nutritionalInfo: document.getElementById('nutritionalInfo').value,
+                    context: document.getElementById('recipeOrigin').value,
+                    whoPrepared: document.getElementById('whoPrepared').value,
+                    whoConsumed: document.getElementById('whoConsumed').value,
+                    rituals: document.getElementById('rituals').value,
+                    reflection: document.getElementById('reflectionConnection').value + '\n\n' + 
+                                document.getElementById('reflectionPast').value + '\n\n' + 
+                                document.getElementById('reflectionFuture').value
+                };
+                
+                // Adicionar a nova receita aos dados
+                data.recipes.push(newRecipe);
+                saveData(data);
+                
+                // Mostrar mensagem de sucesso
+                alert('Receita salva com sucesso!');
+                
+                // Redirecionar para a página principal
+                window.location.href = 'index.html';
+            });
+            
+            // Evento para voltar à página principal
+            document.querySelector('.btn-outline-light').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Tem certeza que deseja voltar? Todas as informações não salvas serão perdidas.')) {
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // Evento para cancelar
+            document.querySelector('.btn-outline-secondary').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Tem certeza que deseja cancelar? Todas as informações não salvas serão perdidas.')) {
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // Evento para upload de imagem (simulado)
+            document.getElementById('uploadImageButton').addEventListener('click', function() {
+                const imageUrl = prompt('Cole o link da imagem:', 'https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Sua+Receita');
+                if (imageUrl) {
+                    document.getElementById('recipeImage').value = imageUrl;
+                }
+            });
+        }
+
+        // Inicializar quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>

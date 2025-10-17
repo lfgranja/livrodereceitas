@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação e Avaliação - Livro de Receitas Históricas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50C878;
+            --accent-color: #E94B3C;
+            --warning-color: #F4D03F;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #3a7bc8);
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .presentation-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #43a866;
+            border-color: #43a866;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #d14335;
+            border-color: #d14335;
+        }
+        
+        .btn-warning-custom {
+            background-color: var(--warning-color);
+            border-color: var(--warning-color);
+            color: #333;
+        }
+        
+        .btn-warning-custom:hover {
+            background-color: #e6c335;
+            border-color: #e6c335;
+        }
+        
+        .evaluation-criteria {
+            background-color: #e8f4f8;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+        }
+        
+        .recipe-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f8f9fa;
+        }
+        
+        .recipe-card.selected {
+            border-color: var(--primary-color);
+            background-color: #e6f0ff;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.25);
+        }
+        
+        .progress-bar-custom {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .rating-stars {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="h4 mb-0">Sabores e Sabores</h1>
+                    <p class="mb-0">Livro de Receitas Históricas</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Apresentação da Degustação Histórica</h2>
+        
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            Escolha uma receita para apresentar. Prepare-se para explicar a história da receita, 
+            os ingredientes, o modo de preparo e o que vocês aprenderam.
+        </div>
+        
+        <div class="presentation-card">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-1">
+                    <div class="fs-1 text-primary">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <h3 class="mb-0">Guia para a Apresentação</h3>
+                    <p class="mb-0">Siga estas etapas para uma apresentação bem-sucedida:</p>
+                </div>
+            </div>
+            
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Escolham uma receita:</div>
+                        Decidam qual das receitas vocês vão preparar para a degustação
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Adaptem para a escola:</div>
+                        Se a receita original for muito complicada ou use ingredientes difíceis de conseguir, façam adaptações para a sua realidade
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Preparem com cuidado:</div>
+                        Sigam o modo de preparo e peçam ajuda se precisarem
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Montem a mesa:</div>
+                        Deixem a mesa da degustação bonita e organizada
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Apresentem o livro:</div>
+                        Mostrem o livro de receitas para as outras equipes e expliquem a história da receita
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Ofereçam a degustação:</div>
+                        Sirvam um pedacinho da receita para cada pessoa experimentar
+                    </div>
+                </li>
+            </ol>
+        </div>
+        
+        <div class="presentation-card">
+            <h3 class="mb-4">Receitas Disponíveis para Apresentação</h3>
+            
+            <div class="row" id="recipesContainer">
+                <!-- Será populado dinamicamente -->
+            </div>
+            
+            <div class="text-center mt-4" id="noRecipesMessage" style="display: none;">
+                <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+                <h4>Você ainda não criou nenhuma receita</h4>
+                <p class="text-muted">Crie receitas antes de preparar sua apresentação.</p>
+                <a href="create-recipe.html" class="btn btn-primary">
+                    <i class="fas fa-plus-circle me-2"></i> Criar Nova Receita
+                </a>
+            </div>
+        </div>
+        
+        <div class="presentation-card">
+            <h3 class="mb-4">Como o Trabalho Será Avaliado</h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="evaluation-criteria">
+                        <h5><i class="fas fa-search me-2 text-primary"></i> Qualidade da Pesquisa Culinária e Histórica</h5>
+                        <ul class="mb-0">
+                            <li>Vocês pesquisaram receitas que realmente existiram no período escolhido?</li>
+                            <li>As informações históricas sobre a receita estão corretas e completas?</li>
+                            <li>Vocês entenderam e expuseram a importância dos ingredientes e do modo de preparo para aquela época?</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="evaluation-criteria">
+                        <h5><i class="fas fa-paint-brush me-2 text-success"></i> Criatividade e Apresentação do Livro de Receitas</h5>
+                        <ul class="mb-0">
+                            <li>As receitas estão bem organizadas e fáceis de entender?</li>
+                            <li>As ilustrações e decorações são criativas e apropriadas?</li>
+                            <li>A apresentação da degustação foi interessante e informativa?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="evaluation-criteria">
+                        <h5><i class="fas fa-history me-2 text-info"></i> Conexão com a História e a Cultura</h5>
+                        <ul class="mb-0">
+                            <li>Vocês conseguiram explicar a relação entre a comida e a História do povo ou período escolhido?</li>
+                            <li>Vocês mostraram que entenderam a importância de valorizar os saberes culinários ancestrais?</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="evaluation-criteria">
+                        <h5><i class="fas fa-users me-2 text-warning"></i> Trabalho em Equipe e Aplicabilidade das Receitas</h5>
+                        <ul class="mb-0">
+                            <li>Todos os membros da equipe participaram da pesquisa, da criação do livro e da preparação da degustação?</li>
+                            <li>As receitas que vocês escolheram são possíveis de serem preparadas na escola (com adaptações, se necessário)?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="presentation-card text-center">
+            <h4 class="mb-4">Pronto para a Apresentação?</h4>
+            <p class="mb-4">Lembrem-se de olhar a descrição do projeto para o bimestre de vocês. Lá estarão os critérios de avaliação específicos para aquele tema.</p>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button class="btn btn-accent btn-lg me-md-2" id="preparePresentationBtn">
+                    <i class="fas fa-play-circle me-2"></i> Preparar Apresentação
+                </button>
+                <button class="btn btn-warning-custom btn-lg" id="practicePresentationBtn">
+                    <i class="fas fa-user-check me-2"></i> Praticar Apresentação
+                </button>
+                <button class="btn btn-secondary btn-lg" id="submitPresentationBtn">
+                    <i class="fas fa-paper-plane me-2"></i> Enviar Apresentação
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Preparar Apresentação -->
+    <div class="modal fade" id="preparePresentationModal" tabindex="-1" aria-labelledby="preparePresentationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="preparePresentationModalLabel">Preparar Apresentação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5><i class="fas fa-clipboard-list text-primary me-2"></i> Checklist de Preparação</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="checkRecipe">
+                            <label class="form-check-label" for="checkRecipe">Receita selecionada e adaptada para apresentação</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="checkIngredients">
+                            <label class="form-check-label" for="checkIngredients">Ingredientes adquiridos ou confirmados</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="checkPreparation">
+                            <label class="form-check-label" for="checkPreparation">Modo de preparo praticado</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="checkMaterials">
+                            <label class="form-check-label" for="checkMaterials">Materiais para apresentação prontos (livro, ilustrações, etc.)</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="checkSetup">
+                            <label class="form-check-label" for="checkSetup">Espaço de apresentação organizado</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5><i class="fas fa-clock text-success me-2"></i> Cronograma da Apresentação</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Data da Apresentação</label>
+                                    <input type="date" class="form-control" id="presentationDate">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Horário</label>
+                                    <input type="time" class="form-control" id="presentationTime">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h5><i class="fas fa-users text-info me-2"></i> Participantes</h5>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" id="participantName" placeholder="Nome do participante">
+                            <button class="btn btn-outline-primary" type="button" id="addParticipantBtn">
+                                <i class="fas fa-plus"></i> Adicionar
+                            </button>
+                        </div>
+                        <div id="participantsList" class="d-flex flex-wrap">
+                            <!-- Será populado dinamicamente -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="savePreparationBtn">Salvar Preparação</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Praticar Apresentação -->
+    <div class="modal fade" id="practicePresentationModal" tabindex="-1" aria-labelledby="practicePresentationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="practicePresentationModalLabel">Praticar Apresentação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5><i class="fas fa-microphone-alt text-primary me-2"></i> Script de Apresentação</h5>
+                        <textarea class="form-control" id="presentationScript" rows="6" placeholder="Escreva aqui o roteiro da sua apresentação...&#10;&#10;Ex:&#10;Olá pessoal! Hoje vamos apresentar a receita do Pão de Açúcar Medieval.&#10;Esta receita remonta ao período medieval europeu, quando o açúcar era um produto raro e caro..."></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5><i class="fas fa-stopwatch text-success me-2"></i> Tempo da Apresentação</h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-custom bg-primary" role="progressbar" style="width: 0%;" id="timeProgress"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span>00:00</span>
+                                    <span id="currentTime">00:00</span>
+                                    <span id="totalTime">05:00</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <button class="btn btn-success" id="startTimerBtn">
+                                    <i class="fas fa-play me-1"></i> Iniciar
+                                </button>
+                                <button class="btn btn-warning" id="pauseTimerBtn" style="display: none;">
+                                    <i class="fas fa-pause me-1"></i> Pausar
+                                </button>
+                                <button class="btn btn-danger" id="resetTimerBtn" style="display: none;">
+                                    <i class="fas fa-redo me-1"></i> Reiniciar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h5><i class="fas fa-comments text-info me-2"></i> Feedback da Prática</h5>
+                        <div class="alert alert-light border">
+                            <p class="mb-2"><strong>Dicas para uma boa apresentação:</strong></p>
+                            <ul class="mb-0">
+                                <li>Fale claramente e com confiança</li>
+                                <li>Mantenha contato visual com o público</li>
+                                <li>Use gestos naturais para enfatizar pontos importantes</li>
+                                <li>Pratique bastante antes da apresentação oficial</li>
+                            </ul>
+                        </div>
+                        <textarea class="form-control" id="practiceFeedback" rows="3" placeholder="Anote aqui observações sobre sua prática..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Enviar Apresentação -->
+    <div class="modal fade" id="submitPresentationModal" tabindex="-1" aria-labelledby="submitPresentationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="submitPresentationModalLabel">Enviar Apresentação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <h5><i class="fas fa-file-upload text-primary me-2"></i> Documentos para Envio</h5>
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-book me-2 text-success"></i>
+                                        Livro de Receitas (PDF)
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-images me-2 text-warning"></i>
+                                        Fotos da Apresentação
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-video me-2 text-danger"></i>
+                                        Vídeo da Apresentação (Opcional)
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h5><i class="fas fa-star text-warning me-2"></i> Autoavaliação</h5>
+                        <div class="mb-2">
+                            <label class="form-label">Como você avalia seu desempenho na apresentação?</label>
+                            <select class="form-select" id="selfRating">
+                                <option value="">Selecione uma nota...</option>
+                                <option value="5">Excelente (5 estrelas)</option>
+                                <option value="4">Muito Bom (4 estrelas)</option>
+                                <option value="3">Bom (3 estrelas)</option>
+                                <option value="2">Regular (2 estrelas)</option>
+                                <option value="1">Precisa Melhorar (1 estrela)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-2">
+                            <label class="form-label">O que você mais gostou na apresentação?</label>
+                            <textarea class="form-control" id="whatLiked" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="mb-2">
+                            <label class="form-label">O que você faria diferente na próxima vez?</label>
+                            <textarea class="form-control" id="whatDifferent" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="submitPresentationBtnModal">
+                        <i class="fas fa-paper-plane me-1"></i> Enviar Apresentação
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para obter dados do localStorage
+        function getData() {
+            const defaultData = {
+                "recipes": [
+                    {
+                        "id": 1,
+                        "title": "Pão de Açúcar Medieval",
+                        "description": "Receita tradicional dos tempos medievais com ingredientes simples",
+                        "historicalPeriod": "Idade Média",
+                        "culture": "Europeia",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Pão+Medieval",
+                        "history": "Esta receita remonta ao período medieval europeu, quando o açúcar era um produto raro e caro, acessível apenas às classes mais abastadas.",
+                        "ingredients": [
+                            { "name": "Farinha antiga", "amount": "1 xícara" },
+                            { "name": "Mel de engenho", "amount": "3 colheres" },
+                            { "name": "Ervas aromáticas", "amount": "a gosto" }
+                        ],
+                        "originalIngredients": [
+                            { "name": "Farinha antiga", "amount": "1 xícara" },
+                            { "name": "Mel de engenho", "amount": "3 colheres" },
+                            { "name": "Ervas aromáticas", "amount": "a gosto" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Farinha de trigo", "amount": "1 xícara", "price": "R$ 2,50", "location": "Mercado A" },
+                            { "name": "Mel", "amount": "3 colheres", "price": "R$ 8,00", "location": "Mercado B" },
+                            { "name": "Ervas frescas", "amount": "a gosto", "price": "R$ 3,00", "location": "Mercado C" }
+                        ],
+                        "preparation": "Misture todos os ingredientes e deixe descansar por 30 minutos. Originalmente cozido em forno de barro por aproximadamente 45 minutos.",
+                        "preparationOriginal": "Misture todos os ingredientes e deixe descansar por 30 minutos. Originalmente cozido em forno de barro por aproximadamente 45 minutos.",
+                        "preparationModern": "1. Pré-aqueça o forno a 180°C\n2. Misture os ingredientes secos em uma vasilha\n3. Adicione os líquidos e misture até formar uma massa homogênea\n4. Deixe descansar por 30 minutos\n5. Asse por 40-45 minutos em forno preaquecido",
+                        "nutritionalInfo": "Rico em carboidratos e vitaminas do complexo B",
+                        "context": "Este pão era consumido por camponeses e nobres, sendo um alimento básico na dieta medieval.",
+                        "whoPrepared": "Principalmente mulheres da casa",
+                        "whoConsumed": "Toda a família",
+                        "rituals": "Em ocasiões especiais e festividades",
+                        "reflection": "Pense sobre como a comida se relaciona com a cultura e a história. A forma de preparar alimentos reflete as condições sociais, econômicas e tecnológicas de cada época."
+                    },
+                    {
+                        "id": 2,
+                        "title": "Mingau dos Primeiros Povos",
+                        "description": "Receita ancestral dos povos indígenas brasileiros",
+                        "historicalPeriod": "Primeiros Povos",
+                        "culture": "Indígena",
+                        "difficulty": "Fácil",
+                        "image": "https://via.placeholder.com/300x200/E94B3C/FFFFFF?text=Mingau+Indígena",
+                        "history": "Receita ancestral dos povos indígenas brasileiros, baseada no aproveitamento de ingredientes da floresta.",
+                        "ingredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras" },
+                            { "name": "Coco ralado", "amount": "1 xícara" },
+                            { "name": "Mel de abelha", "amount": "2 colheres" }
+                        ],
+                        "originalIngredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras" },
+                            { "name": "Coco ralado", "amount": "1 xícara" },
+                            { "name": "Mel de abelha", "amount": "2 colheres" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras", "price": "R$ 4,00", "location": "Mercado A" },
+                            { "name": "Coco ralado", "amount": "1 xícara", "price": "R$ 3,50", "location": "Mercado B" },
+                            { "name": "Mel", "amount": "2 colheres", "price": "R$ 8,00", "location": "Mercado C" }
+                        ],
+                        "preparation": "Misture a farinha com o coco e adicione água morna lentamente. Adoce com mel. Originalmente servido em cerimônias.",
+                        "preparationOriginal": "Misture a farinha com o coco e adicione água morna lentamente. Adoce com mel. Originalmente servido em cerimônias.",
+                        "preparationModern": "1. Em uma panela, misture a farinha de mandioca com o coco\n2. Adicione água morna gradualmente, mexendo sem parar\n3. Continue mexendo até obter uma consistência cremosa\n4. Adoce com mel a gosto\n5. Sirva quente",
+                        "nutritionalInfo": "Fonte de carboidratos e gorduras saudáveis",
+                        "context": "Este mingau era preparado em cerimônias e festividades, simbolizando união e partilha.",
+                        "whoPrepared": "Mulheres da aldeia",
+                        "whoConsumed": "Toda a comunidade",
+                        "rituals": "Preparado em cerimônias religiosas",
+                        "reflection": "A conexão com a natureza era fundamental na cultura indígena. Cada ingrediente tinha um significado espiritual além do valor nutricional."
+                    },
+                    {
+                        "id": 3,
+                        "title": "Feijoada da Primeira República",
+                        "description": "Receita popularizada durante a Primeira República Brasileira",
+                        "historicalPeriod": "Primeira República",
+                        "culture": "Brasileira",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/300x200/50C878/FFFFFF?text=Feijoada",
+                        "history": "A feijoada ganhou destaque durante a Primeira República como prato nacional, unindo influências africanas, indígenas e europeias.",
+                        "ingredients": [
+                            { "name": "Feijão preto", "amount": "500g" },
+                            { "name": "Carne seca", "amount": "300g" },
+                            { "name": "Linguiça", "amount": "200g" }
+                        ],
+                        "originalIngredients": [
+                            { "name": "Feijão preto", "amount": "500g" },
+                            { "name": "Carne de porco defumada", "amount": "300g" },
+                            { "name": "Linguiça artesanal", "amount": "200g" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Feijão preto", "amount": "500g", "price": "R$ 6,00", "location": "Mercado A" },
+                            { "name": "Carne seca", "amount": "300g", "price": "R$ 25,00", "location": "Mercado B" },
+                            { "name": "Linguiça", "amount": "200g", "price": "R$ 12,00", "location": "Mercado C" }
+                        ],
+                        "preparation": "Deixe a carne de molho por 24h. Cozinhe o feijão com as carnes. Originalmente preparada em grandes panelas comunitárias.",
+                        "preparationOriginal": "Deixe a carne de molho por 24h. Cozinhe o feijão com as carnes. Originalmente preparada em grandes panelas comunitárias.",
+                        "preparationModern": "1. Deixe a carne seca de molho por 24h\n2. Em uma panela grande, cozinhe o feijão com água até ficar macio\n3. Adicione as carnes e continue o cozimento\n4. Tempere com alho, cebola e louro\n5. Cozinhe por mais 45 minutos até obter o ponto desejado",
+                        "nutritionalInfo": "Fonte de proteínas e ferro",
+                        "context": "Preparada em comunidades para celebrar e unir famílias, tornou-se símbolo da identidade brasileira.",
+                        "whoPrepared": "Famílias brasileiras",
+                        "whoConsumed": "Toda a população",
+                        "rituals": "Consumida tradicionalmente aos domingos",
+                        "reflection": "A feijoada representa a miscigenação cultural do Brasil. Cada ingrediente tem uma história de superação e adaptação."
+                    }
+                ],
+                "presentations": {
+                    "preparation": {
+                        "checklist": {
+                            "recipe": false,
+                            "ingredients": false,
+                            "preparation": false,
+                            "materials": false,
+                            "setup": false
+                        },
+                        "date": "",
+                        "time": "",
+                        "participants": []
+                    },
+                    "practice": {
+                        "script": "",
+                        "feedback": ""
+                    },
+                    "submission": {
+                        "selfRating": "",
+                        "whatLiked": "",
+                        "whatDifferent": ""
+                    }
+                }
+            };
+            
+            return JSON.parse(localStorage.getItem('recipeAppData') || JSON.stringify(defaultData));
+        }
+
+        // Função para salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('recipeAppData', JSON.stringify(data));
+        }
+
+        // Função para renderizar receitas
+        function renderRecipes() {
+            const data = getData();
+            const container = document.getElementById('recipesContainer');
+            const noRecipesMessage = document.getElementById('noRecipesMessage');
+            
+            if (data.recipes.length === 0) {
+                container.style.display = 'none';
+                noRecipesMessage.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'flex';
+            noRecipesMessage.style.display = 'none';
+            container.innerHTML = '';
+            
+            data.recipes.forEach(recipe => {
+                const recipeCard = document.createElement('div');
+                recipeCard.className = 'col-md-4 mb-4';
+                recipeCard.innerHTML = `
+                    <div class="recipe-card h-100">
+                        <img src="${recipe.image}" class="card-img-top" alt="${recipe.title}" style="height: 150px; object-fit: cover; border-radius: 8px;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${recipe.title}</h5>
+                            <p class="card-text flex-grow-1">${recipe.description}</p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary">${recipe.historicalPeriod}</span>
+                                <span class="badge bg-success">${recipe.culture}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Dificuldade: ${recipe.difficulty}</span>
+                                <button class="btn btn-sm btn-outline-primary select-recipe-btn" data-recipe-id="${recipe.id}">
+                                    <i class="fas fa-check"></i> Selecionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(recipeCard);
+            });
+            
+            // Adicionar eventos para selecionar receitas
+            document.querySelectorAll('.select-recipe-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const recipeId = this.getAttribute('data-recipe-id');
+                    selectRecipe(recipeId);
+                });
+            });
+        }
+
+        // Função para selecionar receita
+        function selectRecipe(recipeId) {
+            const data = getData();
+            const recipe = data.recipes.find(r => r.id == recipeId);
+            
+            if (!recipe) {
+                alert('Receita não encontrada.');
+                return;
+            }
+            
+            // Marcar como selecionada (em uma implementação real, isso seria salvo)
+            alert(`Receita "${recipe.title}" selecionada para apresentação!\n\nNa versão completa, você poderia preparar esta receita para a apresentação.`);
+        }
+
+        // Função para preparar apresentação
+        function preparePresentation() {
+            const modal = new bootstrap.Modal(document.getElementById('preparePresentationModal'));
+            modal.show();
+        }
+
+        // Função para praticar apresentação
+        function practicePresentation() {
+            const modal = new bootstrap.Modal(document.getElementById('practicePresentationModal'));
+            modal.show();
+        }
+
+        // Função para enviar apresentação
+        function submitPresentation() {
+            const modal = new bootstrap.Modal(document.getElementById('submitPresentationModal'));
+            modal.show();
+        }
+
+        // Função para salvar preparação
+        function savePreparation() {
+            // Em uma implementação real, isso salvaria os dados
+            alert('Dados de preparação salvos com sucesso!');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('preparePresentationModal'));
+            modal.hide();
+        }
+
+        // Função para iniciar timer
+        function startTimer() {
+            // Em uma implementação real, isso iniciaria um timer
+            alert('Timer iniciado! Na versão completa, isso contaria o tempo da apresentação.');
+        }
+
+        // Função para pausar timer
+        function pauseTimer() {
+            // Em uma implementação real, isso pausaria o timer
+            alert('Timer pausado!');
+        }
+
+        // Função para reiniciar timer
+        function resetTimer() {
+            // Em uma implementação real, isso reiniciaria o timer
+            alert('Timer reiniciado!');
+        }
+
+        // Função para enviar apresentação (modal)
+        function submitPresentationModal() {
+            const selfRating = document.getElementById('selfRating').value;
+            const whatLiked = document.getElementById('whatLiked').value.trim();
+            const whatDifferent = document.getElementById('whatDifferent').value.trim();
+            
+            if (!selfRating) {
+                alert('Por favor, selecione uma nota para sua autoavaliação.');
+                return;
+            }
+            
+            // Em uma implementação real, isso enviaria os documentos
+            alert('Apresentação enviada com sucesso!\n\nNa versão completa, seus documentos seriam enviados para avaliação.');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('submitPresentationModal'));
+            modal.hide();
+        }
+
+        // Função para inicializar a página
+        function init() {
+            // Renderizar receitas
+            renderRecipes();
+            
+            // Adicionar eventos
+            document.getElementById('preparePresentationBtn').addEventListener('click', preparePresentation);
+            document.getElementById('practicePresentationBtn').addEventListener('click', practicePresentation);
+            document.getElementById('submitPresentationBtn').addEventListener('click', submitPresentation);
+            
+            document.getElementById('savePreparationBtn').addEventListener('click', savePreparation);
+            
+            document.getElementById('startTimerBtn').addEventListener('click', startTimer);
+            document.getElementById('pauseTimerBtn').addEventListener('click', pauseTimer);
+            document.getElementById('resetTimerBtn').addEventListener('click', resetTimer);
+            
+            document.getElementById('submitPresentationBtnModal').addEventListener('click', submitPresentationModal);
+            
+            // Evento para voltar à página principal
+            document.querySelector('.btn-outline-light').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Inicializar quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas de Pesquisa - Livro de Receitas Históricas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50C878;
+            --accent-color: #E94B3C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #3a7bc8);
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #43a866;
+            border-color: #43a866;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #d14335;
+            border-color: #d14335;
+        }
+        
+        .price-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .price-table th, .price-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .price-table th {
+            background-color: #e9ecef;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .nutrition-result {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="h4 mb-0">Sabores e Sabores</h1>
+                    <p class="mb-0">Livro de Receitas Históricas</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Ferramentas de Pesquisa</h2>
+        
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4" id="toolTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="prices-tab" data-bs-toggle="tab" data-bs-target="#prices" type="button" role="tab">
+                    <i class="fas fa-search-dollar me-1"></i> Preços de Ingredientes
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="nutrition-tab" data-bs-toggle="tab" data-bs-target="#nutrition" type="button" role="tab">
+                    <i class="fas fa-calculator me-1"></i> Tabela Nutricional
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="library-tab" data-bs-toggle="tab" data-bs-target="#library" type="button" role="tab">
+                    <i class="fas fa-book me-1"></i> Biblioteca Histórica
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="drawings-tab" data-bs-toggle="tab" data-bs-target="#drawings" type="button" role="tab">
+                    <i class="fas fa-paint-brush me-1"></i> Desenhos & Ilustrações
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Preços de Ingredientes Tab -->
+            <div class="tab-pane fade show active" id="prices" role="tabpanel">
+                <div class="tool-card">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-1">
+                            <div class="tool-icon fs-1 text-primary">
+                                <i class="fas fa-search-dollar"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <h3 class="mb-0">Pesquisar Preços de Ingredientes</h3>
+                            <p class="text-muted mb-0">Informe os ingredientes que deseja pesquisar e encontre os preços mais atualizados em mercados da sua região.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="ingredientSearch" placeholder="Nome do ingrediente (ex: farinha, mel, açúcar)">
+                                <button class="btn btn-primary" type="button" id="searchPricesBtn">
+                                    <i class="fas fa-search"></i> Buscar Preços
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button class="btn btn-success" id="recordPriceBtn">
+                                <i class="fas fa-plus-circle"></i> Registrar Novo Preço
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="price-table" id="priceResults">
+                            <thead>
+                                <tr>
+                                    <th>Ingrediente</th>
+                                    <th>Preço</th>
+                                    <th>Localização</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Será populado dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-3" id="noPriceResults" style="display: none;">
+                        <p class="text-center text-muted">Nenhum preço encontrado. Tente outra busca ou registre um novo preço.</p>
+                    </div>
+                </div>
+                
+                <!-- Formulário para registrar novo preço -->
+                <div class="tool-card" id="recordPriceForm" style="display: none;">
+                    <h4 class="mb-3"><i class="fas fa-plus-circle text-success me-2"></i> Registrar Novo Preço</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nome do Ingrediente *</label>
+                            <input type="text" class="form-control" id="newIngredientName" placeholder="Ex: Farinha de trigo">
+                        </div>
+                        
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Preço *</label>
+                            <input type="text" class="form-control" id="newIngredientPrice" placeholder="Ex: R$ 2,50">
+                        </div>
+                        
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Localização *</label>
+                            <input type="text" class="form-control" id="newIngredientLocation" placeholder="Ex: Mercado Central">
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-outline-secondary me-md-2" id="cancelRecordPrice">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button class="btn btn-success" id="saveNewPrice">
+                            <i class="fas fa-save"></i> Salvar Preço
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela Nutricional Tab -->
+            <div class="tab-pane fade" id="nutrition" role="tabpanel">
+                <div class="tool-card">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-1">
+                            <div class="tool-icon fs-1 text-success">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <h3 class="mb-0">Tabela Nutricional</h3>
+                            <p class="text-muted mb-0">Calcule os valores nutricionais de suas receitas históricas adaptadas para os dias de hoje.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Selecione a receita:</label>
+                                <select class="form-select" id="recipeSelect">
+                                    <option value="">Selecione uma receita...</option>
+                                    <!-- Será populado dinamicamente -->
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Ou insira ingredientes manualmente:</label>
+                                <textarea class="form-control" id="manualIngredients" rows="4" placeholder="Insira os ingredientes e quantidades...&#10;Ex:&#10;- Farinha de trigo: 1 xícara&#10;- Mel: 3 colheres&#10;- Ervas frescas: a gosto"></textarea>
+                            </div>
+                            
+                            <button class="btn btn-success" id="calculateNutritionBtn">
+                                <i class="fas fa-calculator"></i> Calcular Nutrientes
+                            </button>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-info-circle text-info me-2"></i> Nutrientes Importantes</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-circle text-primary me-2"></i> Carboidratos: Fornecem energia</li>
+                                        <li><i class="fas fa-circle text-success me-2"></i> Proteínas: Importantes para crescimento</li>
+                                        <li><i class="fas fa-circle text-warning me-2"></i> Vitaminas: Regulam funções do corpo</li>
+                                        <li><i class="fas fa-circle text-danger me-2"></i> Minerais: Fortalecem ossos e dentes</li>
+                                    </ul>
+                                    <p class="mb-0"><small class="text-muted">Como calcular: Adicione os ingredientes da sua receita, insira as quantidades e a calculadora determinará os valores nutricionais.</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" id="nutritionResults" style="display: none;">
+                        <div class="col-md-12">
+                            <h5><i class="fas fa-chart-bar text-success me-2"></i> Resultado Nutricional</h5>
+                            <div class="nutrition-result">
+                                <div id="nutritionResultContent">
+                                    <!-- Será populado dinamicamente -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biblioteca Histórica Tab -->
+            <div class="tab-pane fade" id="library" role="tabpanel">
+                <div class="tool-card">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-1">
+                            <div class="tool-icon fs-1 text-info">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <h3 class="mb-0">Biblioteca Histórica</h3>
+                            <p class="text-muted mb-0">Acesse nossa biblioteca de referências históricas sobre culinária e costumes alimentares.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="librarySearch" placeholder="Buscar referências...">
+                                <button class="btn btn-primary" type="button" id="searchLibraryBtn">
+                                    <i class="fas fa-search"></i> Buscar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button class="btn btn-success" id="addReferenceBtn">
+                                <i class="fas fa-plus-circle"></i> Adicionar Referência
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Referências Recomendadas</h4>
+                            <div class="list-group" id="referenceList">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">História da Alimentação no Brasil</h5>
+                                        <small class="text-muted">Documentário</small>
+                                    </div>
+                                    <p class="mb-1">Explore a evolução dos hábitos alimentares no Brasil ao longo dos séculos.</p>
+                                    <small class="text-muted">Fonte: Museu da Alimentação</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Culinária dos Primeiros Povos</h5>
+                                        <small class="text-muted">Artigo Acadêmico</small>
+                                    </div>
+                                    <p class="mb-1">Conheça os ingredientes e técnicas culinárias dos povos indígenas brasileiros.</p>
+                                    <small class="text-muted">Fonte: Revista de Etnobiologia</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Cozinha Medieval Europeia</h5>
+                                        <small class="text-muted">Livro</small>
+                                    </div>
+                                    <p class="mb-1">Descubra os segredos da culinária europeia durante a Idade Média.</p>
+                                    <small class="text-muted">Fonte: Editora Histórica</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Influências Africanas na Gastronomia</h5>
+                                        <small class="text-muted">Vídeo</small>
+                                    </div>
+                                    <p class="mb-1">Entenda como os saberes culinários africanos transformaram a cozinha brasileira.</p>
+                                    <small class="text-muted">Fonte: Canal Cultural</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Receitas da Primeira República</h5>
+                                        <small class="text-muted">Artigo</small>
+                                    </div>
+                                    <p class="mb-1">As transformações alimentares no Brasil durante a Primeira República.</p>
+                                    <small class="text-muted">Fonte: Revista de História</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desenhos & Ilustrações Tab -->
+            <div class="tab-pane fade" id="drawings" role="tabpanel">
+                <div class="tool-card">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-1">
+                            <div class="tool-icon fs-1 text-warning">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <h3 class="mb-0">Desenhos & Ilustrações</h3>
+                            <p class="text-muted mb-0">Crie desenhos e ilustrações para complementar suas receitas históricas.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+                        <button class="btn btn-success" id="createDrawingBtn">
+                            <i class="fas fa-plus-circle"></i> Criar Nova Ilustração
+                        </button>
+                        <button class="btn btn-primary" id="viewGalleryBtn">
+                            <i class="fas fa-folder-open"></i> Ver Galeria de Desenhos
+                        </button>
+                    </div>
+                    
+                    <div class="row" id="drawingGallery">
+                        <div class="col-md-3 mb-4">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/200x200/4A90E2/FFFFFF?text=Desenho+1" class="card-img-top" alt="Desenho de ingredientes">
+                                <div class="card-body">
+                                    <h6 class="card-title">Ingredientes Originais</h6>
+                                    <p class="card-text"><small class="text-muted">20/10/2025</small></p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary edit-drawing" data-id="1">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger delete-drawing" data-id="1">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-info download-drawing" data-id="1">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/200x200/E94B3C/FFFFFF?text=Desenho+2" class="card-img-top" alt="Desenho utensílios">
+                                <div class="card-body">
+                                    <h6 class="card-title">Utensílios Históricos</h6>
+                                    <p class="card-text"><small class="text-muted">18/10/2025</small></p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary edit-drawing" data-id="2">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger delete-drawing" data-id="2">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-info download-drawing" data-id="2">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/200x200/50C878/FFFFFF?text=Desenho+3" class="card-img-top" alt="Desenho cena">
+                                <div class="card-body">
+                                    <h6 class="card-title">Cena Histórica</h6>
+                                    <p class="card-text"><small class="text-muted">15/10/2025</small></p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary edit-drawing" data-id="3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger delete-drawing" data-id="3">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-info download-drawing" data-id="3">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/200x200/F4D03F/333?text=Desenho+4" class="card-img-top" alt="Desenho cores">
+                                <div class="card-body">
+                                    <h6 class="card-title">Representação de Época</h6>
+                                    <p class="card-text"><small class="text-muted">12/10/2025</small></p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary edit-drawing" data-id="4">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger delete-drawing" data-id="4">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-info download-drawing" data-id="4">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-lightbulb text-warning me-2"></i> Dicas para Ilustrações</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i> Desenhe ingredientes originais</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i> Ilustre utensílios antigos</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i> Represente o contexto histórico</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i> Use cores que representem o período</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para obter dados do localStorage
+        function getData() {
+            const defaultData = {
+                "recipes": [
+                    {
+                        "id": 1,
+                        "title": "Pão de Açúcar Medieval",
+                        "description": "Receita tradicional dos tempos medievais com ingredientes simples",
+                        "historicalPeriod": "Idade Média",
+                        "culture": "Europeia",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Pão+Medieval",
+                        "history": "Esta receita remonta ao período medieval europeu, quando o açúcar era um produto raro e caro, acessível apenas às classes mais abastadas.",
+                        "ingredients": [
+                            { "name": "Farinha antiga", "amount": "1 xícara" },
+                            { "name": "Mel de engenho", "amount": "3 colheres" },
+                            { "name": "Ervas aromáticas", "amount": "a gosto" }
+                        ],
+                        "originalIngredients": [
+                            { "name": "Farinha antiga", "amount": "1 xícara" },
+                            { "name": "Mel de engenho", "amount": "3 colheres" },
+                            { "name": "Ervas aromáticas", "amount": "a gosto" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Farinha de trigo", "amount": "1 xícara", "price": "R$ 2,50", "location": "Mercado A" },
+                            { "name": "Mel", "amount": "3 colheres", "price": "R$ 8,00", "location": "Mercado B" },
+                            { "name": "Ervas frescas", "amount": "a gosto", "price": "R$ 3,00", "location": "Mercado C" }
+                        ],
+                        "preparation": "Misture todos os ingredientes e deixe descansar por 30 minutos. Originalmente cozido em forno de barro por aproximadamente 45 minutos.",
+                        "preparationOriginal": "Misture todos os ingredientes e deixe descansar por 30 minutos. Originalmente cozido em forno de barro por aproximadamente 45 minutos.",
+                        "preparationModern": "1. Pré-aqueça o forno a 180°C\n2. Misture os ingredientes secos em uma vasilha\n3. Adicione os líquidos e misture até formar uma massa homogênea\n4. Deixe descansar por 30 minutos\n5. Asse por 40-45 minutos em forno preaquecido",
+                        "nutritionalInfo": "Rico em carboidratos e vitaminas do complexo B",
+                        "context": "Este pão era consumido por camponeses e nobres, sendo um alimento básico na dieta medieval.",
+                        "whoPrepared": "Principalmente mulheres da casa",
+                        "whoConsumed": "Toda a família",
+                        "rituals": "Em ocasiões especiais e festividades",
+                        "reflection": "Pense sobre como a comida se relaciona com a cultura e a história. A forma de preparar alimentos reflete as condições sociais, econômicas e tecnológicas de cada época."
+                    },
+                    {
+                        "id": 2,
+                        "title": "Mingau dos Primeiros Povos",
+                        "description": "Receita ancestral dos povos indígenas brasileiros",
+                        "historicalPeriod": "Primeiros Povos",
+                        "culture": "Indígena",
+                        "difficulty": "Fácil",
+                        "image": "https://via.placeholder.com/800x400/E94B3C/FFFFFF?text=Mingau+Indígena",
+                        "history": "Receita ancestral dos povos indígenas brasileiros, baseada no aproveitamento de ingredientes da floresta.",
+                        "ingredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras" },
+                            { "name": "Coco ralado", "amount": "1 xícara" },
+                            { "name": "Mel de abelha", "amount": "2 colheres" }
+                        ],
+                        "originalIngredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras" },
+                            { "name": "Coco ralado", "amount": "1 xícara" },
+                            { "name": "Mel de abelha", "amount": "2 colheres" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Farinha de mandioca", "amount": "2 xícaras", "price": "R$ 4,00", "location": "Mercado A" },
+                            { "name": "Coco ralado", "amount": "1 xícara", "price": "R$ 3,50", "location": "Mercado B" },
+                            { "name": "Mel", "amount": "2 colheres", "price": "R$ 8,00", "location": "Mercado C" }
+                        ],
+                        "preparation": "Misture a farinha com o coco e adicione água morna lentamente. Adoce com mel. Originalmente servido em cerimônias.",
+                        "preparationOriginal": "Misture a farinha com o coco e adicione água morna lentamente. Adoce com mel. Originalmente servido em cerimônias.",
+                        "preparationModern": "1. Em uma panela, misture a farinha de mandioca com o coco\n2. Adicione água morna gradualmente, mexendo sem parar\n3. Continue mexendo até obter uma consistência cremosa\n4. Adoce com mel a gosto\n5. Sirva quente",
+                        "nutritionalInfo": "Fonte de carboidratos e gorduras saudáveis",
+                        "context": "Este mingau era preparado em cerimônias e festividades, simbolizando união e partilha.",
+                        "whoPrepared": "Mulheres da aldeia",
+                        "whoConsumed": "Toda a comunidade",
+                        "rituals": "Preparado em cerimônias religiosas",
+                        "reflection": "A conexão com a natureza era fundamental na cultura indígena."
+                    },
+                    {
+                        "id": 3,
+                        "title": "Feijoada da Primeira República",
+                        "description": "Receita popularizada durante a Primeira República Brasileira",
+                        "historicalPeriod": "Primeira República",
+                        "culture": "Brasileira",
+                        "difficulty": "Difícil",
+                        "image": "https://via.placeholder.com/800x400/50C878/FFFFFF?text=Feijoada",
+                        "history": "A feijoada ganhou destaque durante a Primeira República como prato nacional, unindo influências africanas, indígenas e europeias.",
+                        "ingredients": [
+                            { "name": "Feijão preto", "amount": "500g" },
+                            { "name": "Carne seca", "amount": "300g" },
+                            { "name": "Linguiça", "amount": "200g" }
+                        ],
+                        "originalIngredients": [
+                            { "name": "Feijão preto", "amount": "500g" },
+                            { "name": "Carne de porco defumada", "amount": "300g" },
+                            { "name": "Linguiça artesanal", "amount": "200g" }
+                        ],
+                        "modernIngredients": [
+                            { "name": "Feijão preto", "amount": "500g", "price": "R$ 6,00", "location": "Mercado A" },
+                            { "name": "Carne seca", "amount": "300g", "price": "R$ 25,00", "location": "Mercado B" },
+                            { "name": "Linguiça", "amount": "200g", "price": "R$ 12,00", "location": "Mercado C" }
+                        ],
+                        "preparation": "Deixe a carne de molho por 24h. Cozinhe o feijão com as carnes. Originalmente preparada em grandes panelas comunitárias.",
+                        "preparationOriginal": "Deixe a carne de molho por 24h. Cozinhe o feijão com as carnes. Originalmente preparada em grandes panelas comunitárias.",
+                        "preparationModern": "1. Deixe a carne seca de molho por 24h\n2. Em uma panela grande, cozinhe o feijão com água até ficar macio\n3. Adicione as carnes e continue o cozimento\n4. Tempere com alho, cebola e louro\n5. Cozinhe por mais 45 minutos até obter o ponto desejado",
+                        "nutritionalInfo": "Fonte de proteínas e ferro",
+                        "context": "Preparada em comunidades para celebrar e unir famílias, tornou-se símbolo da identidade brasileira.",
+                        "whoPrepared": "Famílias brasileiras",
+                        "whoConsumed": "Toda a população",
+                        "rituals": "Consumida tradicionalmente aos domingos",
+                        "reflection": "A feijoada representa a miscigenação cultural do Brasil."
+                    }
+                ],
+                "prices": [
+                    { "id": 1, "ingredient": "Farinha de trigo", "price": "R$ 2,50", "location": "Mercado A", "date": "10/10/2025" },
+                    { "id": 2, "ingredient": "Mel", "price": "R$ 8,00", "location": "Mercado B", "date": "12/10/2025" },
+                    { "id": 3, "ingredient": "Ervas frescas", "price": "R$ 3,00", "location": "Mercado C", "date": "11/10/2025" },
+                    { "id": 4, "ingredient": "Farinha de mandioca", "price": "R$ 4,00", "location": "Mercado A", "date": "09/10/2025" },
+                    { "id": 5, "ingredient": "Coco ralado", "price": "R$ 3,50", "location": "Mercado B", "date": "08/10/2025" },
+                    { "id": 6, "ingredient": "Feijão preto", "price": "R$ 6,00", "location": "Mercado A", "date": "07/10/2025" },
+                    { "id": 7, "ingredient": "Carne seca", "price": "R$ 25,00", "location": "Mercado B", "date": "06/10/2025" },
+                    { "id": 8, "ingredient": "Linguiça", "price": "R$ 12,00", "location": "Mercado C", "date": "05/10/2025" }
+                ]
+            };
+            
+            return JSON.parse(localStorage.getItem('recipeAppData') || JSON.stringify(defaultData));
+        }
+
+        // Função para salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('recipeAppData', JSON.stringify(data));
+        }
+
+        // Função para renderizar preços
+        function renderPrices(prices) {
+            const tbody = document.querySelector('#priceResults tbody');
+            tbody.innerHTML = '';
+            
+            if (prices.length === 0) {
+                document.getElementById('noPriceResults').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('noPriceResults').style.display = 'none';
+            
+            prices.forEach(price => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${price.ingredient}</td>
+                    <td>${price.price}</td>
+                    <td>${price.location}</td>
+                    <td>${price.date}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary edit-price" data-id="${price.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-price" data-id="${price.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            // Adicionar eventos para editar e excluir preços
+            document.querySelectorAll('.edit-price').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    editPrice(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-price').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deletePrice(id);
+                });
+            });
+        }
+
+        // Função para buscar preços
+        function searchPrices() {
+            const searchTerm = document.getElementById('ingredientSearch').value.toLowerCase();
+            const data = getData();
+            
+            if (searchTerm) {
+                const filtered = data.prices.filter(price => 
+                    price.ingredient.toLowerCase().includes(searchTerm)
+                );
+                renderPrices(filtered);
+            } else {
+                renderPrices(data.prices);
+            }
+        }
+
+        // Função para editar preço
+        function editPrice(id) {
+            const data = getData();
+            const price = data.prices.find(p => p.id === parseInt(id));
+            if (price) {
+                const newPrice = prompt('Novo preço:', price.price);
+                if (newPrice !== null) {
+                    price.price = newPrice;
+                    saveData(data);
+                    renderPrices(data.prices);
+                }
+            }
+        }
+
+        // Função para excluir preço
+        function deletePrice(id) {
+            if (confirm('Tem certeza que deseja excluir este preço?')) {
+                const data = getData();
+                data.prices = data.prices.filter(p => p.id !== parseInt(id));
+                saveData(data);
+                renderPrices(data.prices);
+            }
+        }
+
+        // Função para registrar novo preço
+        function recordNewPrice() {
+            const ingredient = document.getElementById('newIngredientName').value.trim();
+            const price = document.getElementById('newIngredientPrice').value.trim();
+            const location = document.getElementById('newIngredientLocation').value.trim();
+            
+            if (!ingredient || !price || !location) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            const data = getData();
+            const newPrice = {
+                id: Date.now(),
+                ingredient: ingredient,
+                price: price,
+                location: location,
+                date: new Date().toLocaleDateString('pt-BR')
+            };
+            data.prices.push(newPrice);
+            saveData(data);
+            
+            // Limpar formulário
+            document.getElementById('newIngredientName').value = '';
+            document.getElementById('newIngredientPrice').value = '';
+            document.getElementById('newIngredientLocation').value = '';
+            
+            // Ocultar formulário
+            document.getElementById('recordPriceForm').style.display = 'none';
+            
+            // Atualizar lista de preços
+            renderPrices(data.prices);
+            
+            alert('Preço registrado com sucesso!');
+        }
+
+        // Função para calcular nutrição
+        function calculateNutrition() {
+            const recipeSelect = document.getElementById('recipeSelect').value;
+            const manualIngredients = document.getElementById('manualIngredients').value.trim();
+            
+            if (!recipeSelect && !manualIngredients) {
+                alert('Por favor, selecione uma receita ou insira ingredientes manualmente.');
+                return;
+            }
+            
+            // Simular cálculo nutricional
+            let resultText = '';
+            
+            if (recipeSelect) {
+                const data = getData();
+                const recipe = data.recipes.find(r => r.id == recipeSelect);
+                if (recipe) {
+                    resultText = `<h5>${recipe.title}</h5>
+                    <p><strong>Valor nutricional estimado:</strong></p>
+                    <ul>
+                        <li>Carboidratos: 45g</li>
+                        <li>Proteínas: 8g</li>
+                        <li>Gorduras: 3g</li>
+                        <li>Fibras: 2g</li>
+                        <li>Vitaminas: B1, B2, B6</li>
+                        <li>Minerais: Ferro, Cálcio, Fósforo</li>
+                        <li>Calorias totais: 220 kcal</li>
+                    </ul>
+                    <p><strong>Informações importantes:</strong> Esta receita fornece energia necessária para as atividades diárias e contém vitaminas do complexo B importantes para o metabolismo.</p>`;
+                }
+            } else {
+                resultText = `<h5>Ingredientes informados</h5>
+                <p><strong>Valor nutricional estimado:</strong></p>
+                <ul>
+                    <li>Carboidratos: 35-50g (variável)</li>
+                    <li>Proteínas: 5-15g (variável)</li>
+                    <li>Gorduras: 2-10g (variável)</li>
+                    <li>Fibras: 1-5g (variável)</li>
+                    <li>Vitaminas e Minerais: Variam conforme os ingredientes</li>
+                    <li>Calorias totais: 150-300 kcal (variável)</li>
+                </ul>
+                <p><strong>Observação:</strong> Os valores exatos dependem das quantidades específicas de cada ingrediente. Para cálculos precisos, utilize balanças e tabelas nutricionais.</p>`;
+            }
+            
+            document.getElementById('nutritionResultContent').innerHTML = resultText;
+            document.getElementById('nutritionResults').style.display = 'block';
+        }
+
+        // Função para renderizar receitas no seletor
+        function renderRecipeSelect() {
+            const data = getData();
+            const select = document.getElementById('recipeSelect');
+            
+            // Limpar opções existentes exceto a primeira
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            
+            // Adicionar receitas
+            data.recipes.forEach(recipe => {
+                const option = document.createElement('option');
+                option.value = recipe.id;
+                option.textContent = recipe.title;
+                select.appendChild(option);
+            });
+        }
+
+        // Função para criar nova ilustração
+        function createNewDrawing() {
+            alert('Abrindo ferramenta de desenho!\n\nNa versão completa, isso abriria uma ferramenta de desenho interativa para criar ilustrações.');
+        }
+
+        // Função para ver galeria de desenhos
+        function viewDrawingGallery() {
+            alert('Abrindo galeria de desenhos!\n\nNa versão completa, isso mostraria todas as ilustrações criadas pelos alunos.');
+        }
+
+        // Função para editar desenho
+        function editDrawing(id) {
+            alert(`Editando desenho #${id}!\n\nNa versão completa, isso abriria o editor de desenho para modificar esta ilustração.`);
+        }
+
+        // Função para excluir desenho
+        function deleteDrawing(id) {
+            if (confirm(`Tem certeza que deseja excluir o desenho #${id}?`)) {
+                alert(`Desenho #${id} excluído!\n\nNa versão completa, isso removeria permanentemente a ilustração.`);
+            }
+        }
+
+        // Função para baixar desenho
+        function downloadDrawing(id) {
+            alert(`Baixando desenho #${id}!\n\nNa versão completa, isso permitiria salvar a ilustração em seu dispositivo.`);
+        }
+
+        // Função para inicializar a página
+        function init() {
+            const data = getData();
+            
+            // Renderizar preços iniciais
+            renderPrices(data.prices);
+            
+            // Renderizar seletor de receitas
+            renderRecipeSelect();
+            
+            // Adicionar eventos
+            document.getElementById('searchPricesBtn').addEventListener('click', searchPrices);
+            document.getElementById('ingredientSearch').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    searchPrices();
+                }
+            });
+            
+            document.getElementById('recordPriceBtn').addEventListener('click', function() {
+                document.getElementById('recordPriceForm').style.display = 'block';
+            });
+            
+            document.getElementById('cancelRecordPrice').addEventListener('click', function() {
+                document.getElementById('recordPriceForm').style.display = 'none';
+            });
+            
+            document.getElementById('saveNewPrice').addEventListener('click', recordNewPrice);
+            
+            document.getElementById('calculateNutritionBtn').addEventListener('click', calculateNutrition);
+            
+            document.getElementById('createDrawingBtn').addEventListener('click', createNewDrawing);
+            document.getElementById('viewGalleryBtn').addEventListener('click', viewDrawingGallery);
+            
+            document.querySelectorAll('.edit-drawing').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    editDrawing(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-drawing').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deleteDrawing(id);
+                });
+            });
+            
+            document.querySelectorAll('.download-drawing').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    downloadDrawing(id);
+                });
+            });
+            
+            // Evento para voltar à página principal
+            document.querySelector('.btn-outline-light').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Inicializar quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livro de Receitas Históricas: Sabores e Sabores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50C878;
+            --accent-color: #E94B3C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #3a7bc8);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .recipe-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            margin-bottom: 1.5rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .recipe-image {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #43a866;
+            border-color: #43a866;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+        
+        .footer {
+            background-color: #e9ecef;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .price-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .price-table th, .price-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .price-table th {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-bold">Sabores e Sabores</h1>
+                    <p class="lead">Livro de Receitas Históricas</p>
+                    <p>Bem-vindos, futuros chefs e historiadores!</p>
+                </div>
+                <div class="col-md-4 text-end language-switcher">
+                    <div class="btn-group">
+                        <button class="btn btn-light btn-sm active" id="portugueseBtn">PT</button>
+                        <button class="btn btn-light btn-sm" id="englishBtn">EN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4" id="appTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" data-i18n="home">Início</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="recipes-tab" data-bs-toggle="tab" data-bs-target="#recipes" type="button" role="tab" data-i18n="recipes">Receitas</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="create-tab" data-bs-toggle="tab" data-bs-target="#create" type="button" role="tab" data-i18n="createRecipe">Criar Receita</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tools-tab" data-bs-toggle="tab" data-bs-target="#tools" type="button" role="tab" data-i18n="tools">Ferramentas</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="teams-tab" data-bs-toggle="tab" data-bs-target="#teams" type="button" role="tab" data-i18n="teams">Equipes</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="presentation-tab" data-bs-toggle="tab" data-bs-target="#presentation" type="button" role="tab" data-i18n="presentation">Apresentação</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" data-i18n="about">Sobre</button>
+            </li>
+            <li class="nav-item ms-auto" role="presentation">
+                <a class="nav-link" href="settings.html" id="settingsLink" data-i18n="settings"><i class="fas fa-cog"></i> Configurações</a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="appTabsContent">
+            <!-- Home Tab -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2 class="mb-4">Vamos aprender História na Cozinha!</h2>
+                        <p>Este guia foi feito especialmente para você e sua equipe embarcarem em uma deliciosa aventura pelo tempo. Com o projeto "Livro de Receitas Históricas: Sabores e Sabores", vocês vão descobrir que a História também se encontra na nossa mesa!</p>
+                        <p>Preparem seus cadernos, lápis de cor e muita curiosidade, porque vamos juntos explorar os ingredientes, os modos de preparo e os segredos culinários de povos e épocas passadas.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-star text-warning"></i> Destaques</h5>
+                                <ul class="list-group list-group-flush" id="featuredRecipes">
+                                    <!-- Será populado dinamicamente -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="row mt-5">
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <h4>Explorar Receitas</h4>
+                            <p>Descubra receitas históricas de diferentes períodos e culturas</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h4>Desenhos & Ilustrações</h4>
+                            <p>Crie ilustrações para complementar suas receitas históricas</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4>Trabalho em Equipe</h4>
+                            <p>Colabore com colegas na criação de seu livro de receitas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipes Tab -->
+            <div class="tab-pane fade" id="recipes" role="tabpanel">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="searchRecipes" placeholder="Buscar receitas...">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex gap-2">
+                            <select class="form-select" id="filterPeriod">
+                                <option value="">Todos os Períodos</option>
+                                <option>Primeiros Povos</option>
+                                <option>Idade Média</option>
+                                <option>Primeira República</option>
+                                <option>Afroamericana</option>
+                            </select>
+                            <select class="form-select" id="filterCulture">
+                                <option value="">Todas as Culturas</option>
+                                <option>Indígena</option>
+                                <option>Europeia</option>
+                                <option>Africana</option>
+                                <option>Brasileira</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="recipesContainer">
+                    <!-- Será populado dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Create Recipe Tab -->
+            <div class="tab-pane fade" id="create" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4">
+                            <h3 class="mb-4">Criar Nova Receita</h3>
+                            <form id="recipeForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nome da Receita *</label>
+                                        <input type="text" class="form-control" id="recipeName" required>
+                                    </div>
+                                    
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Período Histórico *</label>
+                                        <select class="form-select" id="recipePeriod" required>
+                                            <option value="">Selecione...</option>
+                                            <option>Primeiros Povos</option>
+                                            <option>Idade Média</option>
+                                            <option>Primeira República</option>
+                                            <option>Afroamericana</option>
+                                            <option>Império Romano</option>
+                                            <option>Antigo Egito</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Cultura</label>
+                                        <select class="form-select" id="recipeCulture">
+                                            <option value="">Selecione...</option>
+                                            <option>Indígena</option>
+                                            <option>Europeia</option>
+                                            <option>Africana</option>
+                                            <option>Brasileira</option>
+                                            <option>Árabe</option>
+                                            <option>Asiática</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Descrição *</label>
+                                    <textarea class="form-control" id="recipeDescription" rows="3" required></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Imagem (URL)</label>
+                                    <input type="text" class="form-control" id="recipeImage">
+                                    <div class="form-text">Cole o link de uma imagem online</div>
+                                </div>
+
+                                <h4 class="mt-4">Ingredientes</h4>
+                                <h5>Originais (época histórica)</h5>
+                                <div id="originalIngredients">
+                                    <div class="row mb-2 ingredient-row">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button type="button" class="btn btn-outline-danger remove-ingredient"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-success mb-3" id="addOriginalIngredient">
+                                    <i class="fas fa-plus"></i> Adicionar Ingrediente Original
+                                </button>
+
+                                <h5 class="mt-3">Adaptados (atual)</h5>
+                                <div id="modernIngredients">
+                                    <div class="row mb-2 ingredient-row">
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control ingredient-price" placeholder="Preço (R$)">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control ingredient-location" placeholder="Localização">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button type="button" class="btn btn-outline-danger remove-ingredient"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-success mb-4" id="addModernIngredient">
+                                    <i class="fas fa-plus"></i> Adicionar Ingrediente Atual
+                                </button>
+
+                                <h4>Modo de Preparo</h4>
+                                <div class="mb-3">
+                                    <label class="form-label">Original (época histórica)</label>
+                                    <textarea class="form-control" id="recipePreparationOriginal" rows="4"></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Adaptado (atual)</label>
+                                    <textarea class="form-control" id="recipePreparationModern" rows="4"></textarea>
+                                </div>
+
+                                <h4>Informações Históricas</h4>
+                                <div class="mb-3">
+                                    <label class="form-label">Origem e Contexto</label>
+                                    <textarea class="form-control" id="recipeOrigin" rows="3"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Quem Preparava?</label>
+                                        <input type="text" class="form-control" id="recipeWhoPrepared">
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Quem Consumia?</label>
+                                        <input type="text" class="form-control" id="recipeWhoConsumed">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Rituais ou Festividades?</label>
+                                    <input type="text" class="form-control" id="recipeRituals">
+                                </div>
+
+                                <h4>Informações Nutricionais</h4>
+                                <div class="mb-3">
+                                    <label class="form-label">Principais Nutrientes</label>
+                                    <textarea class="form-control" id="recipeNutrition" rows="2"></textarea>
+                                </div>
+
+                                <h4>Reflexão</h4>
+                                <div class="mb-3">
+                                    <label class="form-label">Ligando os Pontos</label>
+                                    <textarea class="form-control" id="recipeReflection" rows="3"></textarea>
+                                </div>
+
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn btn-outline-secondary me-md-2" id="cancelCreate">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Salvar Receita
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Tab -->
+            <div class="tab-pane fade" id="tools" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <div class="feature-icon mx-auto">
+                                    <i class="fas fa-search-dollar"></i>
+                                </div>
+                                <h5>Pesquisa de Preços</h5>
+                                <p class="text-muted">Compare preços de ingredientes na sua região</p>
+                                <button class="btn btn-outline-primary" id="openPriceSearch">Acessar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <div class="feature-icon mx-auto">
+                                    <i class="fas fa-calculator"></i>
+                                </div>
+                                <h5>Calculadora Nutricional</h5>
+                                <p class="text-muted">Calcule os valores nutricionais das receitas</p>
+                                <button class="btn btn-outline-primary" id="openNutritionCalc">Acessar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <div class="feature-icon mx-auto">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h5>Biblioteca Histórica</h5>
+                                <p class="text-muted">Acesse referências sobre culinária histórica</p>
+                                <button class="btn btn-outline-primary" id="openLibrary">Acessar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <div class="feature-icon mx-auto">
+                                    <i class="fas fa-paint-brush"></i>
+                                </div>
+                                <h5>Desenhos & Ilustrações</h5>
+                                <p class="text-muted">Crie ilustrações para suas receitas</p>
+                                <button class="btn btn-outline-primary" id="openDrawings">Acessar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Price Search Section -->
+                <div class="card mb-4 hidden" id="priceSearchSection">
+                    <div class="card-header">
+                        <h5><i class="fas fa-search-dollar me-2"></i> Pesquisa de Preços de Ingredientes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="ingredientSearch" placeholder="Nome do ingrediente (ex: farinha, mel, açúcar)">
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary w-100" id="searchPricesBtn">
+                                    <i class="fas fa-search me-1"></i> Buscar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="price-table" id="priceResults">
+                                <thead>
+                                    <tr>
+                                        <th>Ingrediente</th>
+                                        <th>Preço</th>
+                                        <th>Localização</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Será populado dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <button class="btn btn-success mt-3" id="recordNewPriceBtn">
+                            <i class="fas fa-plus-circle me-1"></i> Registrar Novo Preço
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teams Tab -->
+            <div class="tab-pane fade" id="teams" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="card p-4 text-center">
+                            <h3 class="mb-4">Trabalho em Equipe</h3>
+                            <p class="mb-4">Colabore com seus colegas para criar o melhor livro de receitas históricas.</p>
+                            <button class="btn btn-primary btn-lg mb-3" id="createTeamBtn">
+                                <i class="fas fa-plus-circle me-2"></i>Criar Nova Equipe
+                            </button>
+                            <button class="btn btn-outline-primary btn-lg mb-3" id="joinTeamBtn">
+                                <i class="fas fa-user-plus me-2"></i>Entrar em Equipe
+                            </button>
+                            <p class="text-muted">Trabalhem juntos na criação e pesquisa de receitas históricas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Presentation Tab -->
+            <div class="tab-pane fade" id="presentation" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="card p-4 text-center">
+                            <h3 class="mb-4">Apresentação e Avaliação</h3>
+                            <p class="mb-4">Prepare sua apresentação de degustação histórica e saiba como será avaliado.</p>
+                            <button class="btn btn-success btn-lg mb-3" id="startPresentationBtn">
+                                <i class="fas fa-chalkboard-teacher me-2"></i>Iniciar Apresentação
+                            </button>
+                            <p class="text-muted">Siga o guia para uma excelente apresentação final</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- About Tab -->
+            <div class="tab-pane fade" id="about" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="card p-4">
+                            <h3>Sobre o Projeto</h3>
+                            <p>O projeto "Livro de Receitas Históricas: Sabores e Sabores" é uma ferramenta educacional desenvolvida para auxiliar no ensino de História do 6º ao 9º ano do Ensino Fundamental nas Escolas Municipais de Campo Grande.</p>
+                            <p>Através da culinária histórica, os alunos exploram diferentes períodos e culturas, conectando o passado com o presente de forma prática e saborosa.</p>
+                            <h4 class="mt-4">Objetivos:</h4>
+                            <ul>
+                                <li>Conectar História e culinária para um aprendizado mais envolvente</li>
+                                <li>Promover o trabalho colaborativo entre estudantes</li>
+                                <li>Desenvolver habilidades de pesquisa histórica</li>
+                                <li>Fomentar o pensamento crítico sobre a cultura e alimentação</li>
+                                <li>Valorizar saberes culinários ancestrais</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Livro de Receitas Históricas</h5>
+                    <p>Projeto educacional para o ensino de História através da culinária.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contato</h5>
+                    <p>Para dúvidas sobre o uso pedagógico:</p>
+                    <p>Prof. Luís Felipe Mesquita Granja</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Recursos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Documentação para Professores</a></li>
+                        <li><a href="#">Guia de Estudantes</a></li>
+                        <li><a href="#">Exemplos de Receitas</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 Sabores e Sabores - Livro de Receitas Históricas. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dados simulados armazenados no localStorage
+        const dadosIniciais = {
+            "recipes": [
+                {
+                    "id": 1,
+                    "title": "Pão de Açúcar Medieval",
+                    "description": "Receita tradicional dos tempos medievais com ingredientes simples",
+                    "historicalPeriod": "Idade Média",
+                    "culture": "Europeia",
+                    "difficulty": "Difícil",
+                    "image": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Pão+Medieval",
+                    "history": "O pão de açúcar medieval era uma receita comum na Idade Média, feito com ingredientes simples disponíveis nas cozinhas da época.",
+                    "ingredients": [
+                        { "name": "Farinha antiga", "amount": "1 xícara" },
+                        { "name": "Mel de engenho", "amount": "3 colheres" },
+                        { "name": "Ervas aromáticas", "amount": "a gosto" }
+                    ],
+                    "originalIngredients": [
+                        { "name": "Farinha antiga", "amount": "1 xícara" },
+                        { "name": "Mel de engenho", "amount": "3 colheres" },
+                        { "name": "Ervas aromáticas", "amount": "a gosto" }
+                    ],
+                    "modernIngredients": [
+                        { "name": "Farinha de trigo", "amount": "1 xícara", "price": "R$ 2,50", "location": "Mercado A" },
+                        { "name": "Mel", "amount": "3 colheres", "price": "R$ 8,00", "location": "Mercado B" },
+                        { "name": "Ervas frescas", "amount": "a gosto", "price": "R$ 3,00", "location": "Mercado C" }
+                    ],
+                    "preparation": "Misture todos os ingredientes e deixe descansar por 30 minutos. Mode antigo: cozido em forno de barro. Adaptação moderna: forno convencional por 45 minutos.",
+                    "nutritionalInfo": "Rico em carboidratos e vitaminas do complexo B",
+                    "context": "Este pão era consumido por camponeses e nobres, sendo um alimento básico na dieta medieval."
+                },
+                {
+                    "id": 2,
+                    "title": "Mingau dos Primeiros Povos",
+                    "description": "Receita ancestral dos povos indígenas brasileiros",
+                    "historicalPeriod": "Primeiros Povos",
+                    "culture": "Indígena",
+                    "difficulty": "Fácil",
+                    "image": "https://via.placeholder.com/300x200/E94B3C/FFFFFF?text=Mingau+Indígena",
+                    "history": "Receita ancestral dos povos indígenas brasileiros, baseada no aproveitamento de ingredientes da floresta.",
+                    "ingredients": [
+                        { "name": "Farinha de mandioca", "amount": "2 xícaras" },
+                        { "name": "Coco ralado", "amount": "1 xícara" },
+                        { "name": "Mel de abelha", "amount": "2 colheres" }
+                    ],
+                    "originalIngredients": [
+                        { "name": "Farinha de mandioca", "amount": "2 xícaras" },
+                        { "name": "Coco ralado", "amount": "1 xícara" },
+                        { "name": "Mel de abelha", "amount": "2 colheres" }
+                    ],
+                    "modernIngredients": [
+                        { "name": "Farinha de mandioca", "amount": "2 xícaras", "price": "R$ 4,00", "location": "Mercado A" },
+                        { "name": "Coco ralado", "amount": "1 xícara", "price": "R$ 3,50", "location": "Mercado B" },
+                        { "name": "Mel", "amount": "2 colheres", "price": "R$ 8,00", "location": "Mercado C" }
+                    ],
+                    "preparation": "Misture a farinha com o coco e adicione água morna lentamente. Adoce com mel. Originalmente servido em cerimônias.",
+                    "nutritionalInfo": "Fonte de carboidratos e gorduras saudáveis",
+                    "context": "Este mingau era preparado em cerimônias e festividades, simbolizando união e partilha."
+                },
+                {
+                    "id": 3,
+                    "title": "Feijoada da Primeira República",
+                    "description": "Receita popularizada durante a Primeira República Brasileira",
+                    "historicalPeriod": "Primeira República",
+                    "culture": "Brasileira",
+                    "difficulty": "Difícil",
+                    "image": "https://via.placeholder.com/300x200/50C878/FFFFFF?text=Feijoada",
+                    "history": "A feijoada ganhou destaque durante a Primeira República como prato nacional, unindo influências africanas, indígenas e europeias.",
+                    "ingredients": [
+                        { "name": "Feijão preto", "amount": "500g" },
+                        { "name": "Carne seca", "amount": "300g" },
+                        { "name": "Linguiça", "amount": "200g" }
+                    ],
+                    "originalIngredients": [
+                        { "name": "Feijão preto", "amount": "500g" },
+                        { "name": "Carne de porco defumada", "amount": "300g" },
+                        { "name": "Linguiça artesanal", "amount": "200g" }
+                    ],
+                    "modernIngredients": [
+                        { "name": "Feijão preto", "amount": "500g", "price": "R$ 6,00", "location": "Mercado A" },
+                        { "name": "Carne seca", "amount": "300g", "price": "R$ 25,00", "location": "Mercado B" },
+                        { "name": "Linguiça", "amount": "200g", "price": "R$ 12,00", "location": "Mercado C" }
+                    ],
+                    "preparation": "Deixe a carne de molho por 24h. Cozinhe o feijão com as carnes. Originalmente preparada em grandes panelas comunitárias.",
+                    "nutritionalInfo": "Fonte de proteínas e ferro",
+                    "context": "Preparada em comunidades para celebrar e unir famílias, tornou-se símbolo da identidade brasileira."
+                }
+            ],
+            "prices": [
+                { "id": 1, "ingredient": "Farinha de trigo", "price": "R$ 2,50", "location": "Mercado A", "date": "10/10/2025" },
+                { "id": 2, "ingredient": "Mel", "price": "R$ 8,00", "location": "Mercado B", "date": "12/10/2025" },
+                { "id": 3, "ingredient": "Ervas frescas", "price": "R$ 3,00", "location": "Mercado C", "date": "11/10/2025" }
+            ]
+        };
+
+        // Inicializar dados se não existirem no localStorage
+        if (!localStorage.getItem('recipeAppData')) {
+            localStorage.setItem('recipeAppData', JSON.stringify(dadosIniciais));
+        }
+
+        // Função para obter dados do localStorage
+        function getData() {
+            return JSON.parse(localStorage.getItem('recipeAppData') || JSON.stringify(dadosIniciais));
+        }
+
+        // Função para salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('recipeAppData', JSON.stringify(data));
+        }
+
+        // Função para renderizar receitas
+        function renderRecipes(recipes) {
+            const container = document.getElementById('recipesContainer');
+            container.innerHTML = '';
+            
+            if (recipes.length === 0) {
+                container.innerHTML = '<div class="col-12"><p class="text-center">Nenhuma receita encontrada.</p></div>';
+                return;
+            }
+
+            recipes.forEach(recipe => {
+                const recipeCard = document.createElement('div');
+                recipeCard.className = 'col-md-4';
+                recipeCard.innerHTML = `
+                    <div class="card recipe-card" data-recipe-id="${recipe.id}">
+                        <img src="${recipe.image}" class="recipe-image" alt="${recipe.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${recipe.title}</h5>
+                            <p class="card-text">${recipe.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">${recipe.historicalPeriod}</span>
+                                <span class="text-muted">${recipe.difficulty}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(recipeCard);
+                
+                // Adicionar evento de clique para ver detalhes
+                recipeCard.querySelector('.recipe-card').addEventListener('click', function() {
+                    window.location.href = `recipe-details.html?id=${recipe.id}`;
+                });
+            });
+        }
+
+        // Função para renderizar receitas em destaque
+        function renderFeaturedRecipes() {
+            const data = getData();
+            const featuredList = document.getElementById('featuredRecipes');
+            featuredList.innerHTML = '';
+            
+            // Pegar as 3 primeiras receitas
+            const featured = data.recipes.slice(0, 3);
+            featured.forEach(recipe => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.textContent = recipe.title;
+                featuredList.appendChild(li);
+            });
+        }
+
+        // Função para renderizar preços
+        function renderPrices(prices) {
+            const tbody = document.querySelector('#priceResults tbody');
+            tbody.innerHTML = '';
+            
+            if (prices.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhum preço encontrado.</td></tr>';
+                return;
+            }
+
+            prices.forEach(price => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${price.ingredient}</td>
+                    <td>${price.price}</td>
+                    <td>${price.location}</td>
+                    <td>${price.date}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary edit-price" data-id="${price.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-price" data-id="${price.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Adicionar eventos para editar e excluir preços
+            document.querySelectorAll('.edit-price').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    editPrice(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-price').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deletePrice(id);
+                });
+            });
+        }
+
+        // Função para adicionar novo preço
+        function addNewPrice(ingredient, price, location) {
+            const data = getData();
+            const newPrice = {
+                id: Date.now(), // ID único baseado no timestamp
+                ingredient: ingredient,
+                price: price,
+                location: location,
+                date: new Date().toLocaleDateString('pt-BR')
+            };
+            data.prices.push(newPrice);
+            saveData(data);
+            renderPrices(data.prices);
+        }
+
+        // Função para editar preço
+        function editPrice(id) {
+            const data = getData();
+            const price = data.prices.find(p => p.id === parseInt(id));
+            if (price) {
+                const newPrice = prompt('Novo preço:', price.price);
+                if (newPrice !== null) {
+                    price.price = newPrice;
+                    saveData(data);
+                    renderPrices(data.prices);
+                }
+            }
+        }
+
+        // Função para excluir preço
+        function deletePrice(id) {
+            if (confirm('Tem certeza que deseja excluir este preço?')) {
+                const data = getData();
+                data.prices = data.prices.filter(p => p.id !== parseInt(id));
+                saveData(data);
+                renderPrices(data.prices);
+            }
+        }
+
+        // Função para adicionar ingrediente
+        function addIngredient(containerId) {
+            const container = document.getElementById(containerId);
+            const newRow = document.createElement('div');
+            newRow.className = 'row mb-2 ingredient-row';
+            
+            if (containerId === 'modernIngredients') {
+                newRow.innerHTML = `
+                    <div class="col-md-5">
+                        <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control ingredient-price" placeholder="Preço (R$)">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control ingredient-location" placeholder="Localização">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-danger remove-ingredient"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+            } else {
+                newRow.innerHTML = `
+                    <div class="col-md-8">
+                        <input type="text" class="form-control ingredient-name" placeholder="Nome do ingrediente">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control ingredient-amount" placeholder="Quantidade">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-danger remove-ingredient"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+            }
+            
+            container.appendChild(newRow);
+            
+            // Adicionar evento para remover ingrediente
+            newRow.querySelector('.remove-ingredient').addEventListener('click', function() {
+                container.removeChild(newRow);
+            });
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Renderizar receitas iniciais
+            const data = getData();
+            renderRecipes(data.recipes);
+            renderFeaturedRecipes();
+            renderPrices(data.prices);
+
+            // Eventos para adicionar ingredientes
+            document.getElementById('addOriginalIngredient').addEventListener('click', function() {
+                addIngredient('originalIngredients');
+            });
+            
+            document.getElementById('addModernIngredient').addEventListener('click', function() {
+                addIngredient('modernIngredients');
+            });
+
+            // Eventos para remover ingredientes (delegação de eventos)
+            document.getElementById('create').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-ingredient')) {
+                    const row = e.target.closest('.ingredient-row');
+                    if (row) row.remove();
+                }
+            });
+
+            // Evento para o formulário de receita
+            document.getElementById('recipeForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const data = getData();
+                
+                // Coletar dados do formulário
+                const newRecipe = {
+                    id: Date.now(),
+                    title: document.getElementById('recipeName').value,
+                    description: document.getElementById('recipeDescription').value,
+                    historicalPeriod: document.getElementById('recipePeriod').value,
+                    culture: document.getElementById('recipeCulture').value,
+                    difficulty: 'Médio', // Poderia ser selecionável
+                    image: document.getElementById('recipeImage').value || 'https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Receita+Nova',
+                    history: document.getElementById('recipeOrigin').value,
+                    ingredients: [], // Preencher a partir dos campos de ingredientes
+                    originalIngredients: [],
+                    modernIngredients: [],
+                    preparation: document.getElementById('recipePreparationModern').value,
+                    nutritionalInfo: document.getElementById('recipeNutrition').value,
+                    context: document.getElementById('recipeWhoPrepared').value
+                };
+                
+                // Coletar ingredientes originais
+                const originalRows = document.querySelectorAll('#originalIngredients .ingredient-row');
+                originalRows.forEach(row => {
+                    const name = row.querySelector('.ingredient-name').value;
+                    const amount = row.querySelector('.ingredient-amount').value;
+                    if (name && amount) {
+                        newRecipe.originalIngredients.push({ name, amount });
+                        newRecipe.ingredients.push({ name, amount });
+                    }
+                });
+                
+                // Coletar ingredientes modernos
+                const modernRows = document.querySelectorAll('#modernIngredients .ingredient-row');
+                modernRows.forEach(row => {
+                    const name = row.querySelector('.ingredient-name').value;
+                    const amount = row.querySelector('.ingredient-amount').value;
+                    const price = row.querySelector('.ingredient-price')?.value || '';
+                    const location = row.querySelector('.ingredient-location')?.value || '';
+                    if (name && amount) {
+                        newRecipe.modernIngredients.push({ name, amount, price, location });
+                        // Adicionar também ao array geral se não estiver duplicado
+                        if (!newRecipe.ingredients.some(ing => ing.name === name)) {
+                            newRecipe.ingredients.push({ name, amount });
+                        }
+                    }
+                });
+                
+                // Adicionar a nova receita
+                data.recipes.push(newRecipe);
+                saveData(data);
+                
+                // Mostrar mensagem de sucesso e resetar formulário
+                alert('Receita salva com sucesso!');
+                
+                // Resetar formulário
+                document.getElementById('recipeForm').reset();
+                
+                // Voltar para a aba de receitas e renderizar novamente
+                document.getElementById('recipes-tab').click();
+                renderRecipes(data.recipes);
+            });
+
+            // Eventos para busca e filtragem de receitas
+            document.getElementById('searchRecipes').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const periodFilter = document.getElementById('filterPeriod').value;
+                const cultureFilter = document.getElementById('filterCulture').value;
+                
+                const data = getData();
+                const filtered = data.recipes.filter(recipe => {
+                    const matchesSearch = recipe.title.toLowerCase().includes(searchTerm) || 
+                                          recipe.description.toLowerCase().includes(searchTerm);
+                    const matchesPeriod = !periodFilter || recipe.historicalPeriod === periodFilter;
+                    const matchesCulture = !cultureFilter || recipe.culture === cultureFilter;
+                    
+                    return matchesSearch && matchesPeriod && matchesCulture;
+                });
+                
+                renderRecipes(filtered);
+            });
+
+            document.getElementById('filterPeriod').addEventListener('change', function() {
+                const searchTerm = document.getElementById('searchRecipes').value.toLowerCase();
+                const cultureFilter = document.getElementById('filterCulture').value;
+                
+                const data = getData();
+                const filtered = data.recipes.filter(recipe => {
+                    const matchesSearch = recipe.title.toLowerCase().includes(searchTerm) || 
+                                          recipe.description.toLowerCase().includes(searchTerm);
+                    const matchesPeriod = !this.value || recipe.historicalPeriod === this.value;
+                    const matchesCulture = !cultureFilter || recipe.culture === cultureFilter;
+                    
+                    return matchesSearch && matchesPeriod && matchesCulture;
+                });
+                
+                renderRecipes(filtered);
+            });
+
+            document.getElementById('filterCulture').addEventListener('change', function() {
+                const searchTerm = document.getElementById('searchRecipes').value.toLowerCase();
+                const periodFilter = document.getElementById('filterPeriod').value;
+                
+                const data = getData();
+                const filtered = data.recipes.filter(recipe => {
+                    const matchesSearch = recipe.title.toLowerCase().includes(searchTerm) || 
+                                          recipe.description.toLowerCase().includes(searchTerm);
+                    const matchesPeriod = !periodFilter || recipe.historicalPeriod === periodFilter;
+                    const matchesCulture = !this.value || recipe.culture === this.value;
+                    
+                    return matchesSearch && matchesPeriod && matchesCulture;
+                });
+                
+                renderRecipes(filtered);
+            });
+
+            // Eventos para ferramentas
+            document.getElementById('openPriceSearch').addEventListener('click', function() {
+                document.getElementById('priceSearchSection').classList.remove('hidden');
+            });
+
+            document.getElementById('searchPricesBtn').addEventListener('click', function() {
+                const searchTerm = document.getElementById('ingredientSearch').value.toLowerCase();
+                const data = getData();
+                
+                if (searchTerm) {
+                    const filtered = data.prices.filter(price => 
+                        price.ingredient.toLowerCase().includes(searchTerm)
+                    );
+                    renderPrices(filtered);
+                } else {
+                    renderPrices(data.prices);
+                }
+            });
+
+            document.getElementById('recordNewPriceBtn').addEventListener('click', function() {
+                const ingredient = prompt('Nome do ingrediente:');
+                if (ingredient) {
+                    const price = prompt('Preço (ex: R$ 2,50):');
+                    if (price) {
+                        const location = prompt('Localização (opcional):', '');
+                        addNewPrice(ingredient, price, location);
+                    }
+                }
+            });
+
+            // Eventos para botões das equipes
+            document.getElementById('createTeamBtn').addEventListener('click', function() {
+                const teamName = prompt('Nome da nova equipe:');
+                if (teamName) {
+                    alert(`Equipe "${teamName}" criada com sucesso! (funcionalidade completa em implementação)`);
+                }
+            });
+
+            document.getElementById('joinTeamBtn').addEventListener('click', function() {
+                const teamCode = prompt('Código ou nome da equipe:');
+                if (teamCode) {
+                    alert(`Solicitação para entrar na equipe "${teamCode}" enviada! (funcionalidade completa em implementação)`);
+                }
+            });
+
+            // Eventos para apresentação
+            document.getElementById('startPresentationBtn').addEventListener('click', function() {
+                alert('Preparação para apresentação iniciada! (funcionalidade completa em implementação)');
+            });
+
+            // Evento para cancelar criação
+            document.getElementById('cancelCreate').addEventListener('click', function() {
+                if (confirm('Tem certeza que deseja cancelar? Todos os dados não salvos serão perdidos.')) {
+                    document.getElementById('recipeForm').reset();
+                }
+            });
+
+            // Evento para configurações
+            document.getElementById('settingsLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Página de configurações (funcionalidade em implementação)');
+            });
+
+            // Eventos para troca de idioma
+            document.getElementById('portugueseBtn').addEventListener('click', function() {
+                this.classList.add('active');
+                document.getElementById('englishBtn').classList.remove('active');
+            });
+
+            document.getElementById('englishBtn').addEventListener('click', function() {
+                this.classList.add('active');
+                document.getElementById('portugueseBtn').classList.remove('active');
+            });
+        });
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>
