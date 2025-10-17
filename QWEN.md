@@ -2,184 +2,207 @@
 
 ## Project Overview
 
-The "Livro de Receitas Históricas: Sabores e Sabores" (Historical Recipes Book: Knowledges and Flavors) is an educational mobile application developed by Prof. Luís Felipe Mesquita Granja to assist in teaching History to 6th to 9th grade students in Municipal Schools of Campo Grande, Brazil. The application uses historical culinary practices to connect students with different time periods and cultures, making history learning more practical and engaging.
+The "Livro de Receitas Históricas: Sabores e Sabores" (Historical Recipes Book: Knowledges and Flavors) is an educational web application that has been transformed from a static website into a comprehensive dynamic system. The application uses historical culinary practices to connect students with different time periods and cultures, making history learning more practical and engaging.
+
+The system now includes user registration, authentication, team collaboration, evaluation system, search functionality, and a fully dynamic UI that integrates with the backend database. It's designed for the Brazilian educational context, specifically targeting 6th to 9th grade students in Campo Grande.
 
 ## Project Structure
 
 ```
 /home/lfgranja/development/livrodereceitas/
-├── historical-recipes-app/           # Main project directory
-│   └── HistoricalRecipesApp/         # React Native mobile app
-│       ├── src/
-│       │   ├── components/
-│       │   ├── screens/
-│       │   │   └── presentation/
-│       │   ├── i18n/
-│       │   └── utils/
-│       ├── website/                  # Web version of the application
-│       ├── App.js
-│       ├── App.tsx
-│       ├── package.json
-│       └── README.md
-├── HistoricalRecipesApp/             # Duplicate directory (likely staging)
-├── Livreto de apoio - Livro de Receitas Históricas - Saberes e Sabores.pdf  # Educational documentation
-├── livreto_text.txt                  # Text version of educational content
-└── logs/
+├── historical-recipes-app/
+│   └── website/                 # Main PHP web application (transformed from static)
+│       ├── api/                 # API endpoints for dynamic functionality
+│       │   ├── recipes.php      # Recipe management API
+│       │   ├── evaluations.php  # Evaluation/rating system API
+│       │   ├── teams.php        # Team management API
+│       │   ├── search.php       # Search functionality API
+│       │   └── search_advanced.php # Advanced search with filters
+│       ├── auth/                # Authentication system
+│       │   └── auth_functions.php # User authentication functions
+│       ├── config/              # Configuration files
+│       │   └── database.php     # Database configuration
+│       ├── css/                 # Styling
+│       │   └── themes.css       # Theme (light/dark) styles
+│       ├── js/                  # JavaScript files
+│       │   └── i18n.js          # Internationalization support
+│       ├── index.php            # Main application page with authentication
+│       ├── index_dynamic.php    # Dynamic version with API integration
+│       ├── index_final.php      # Final version with all features
+│       ├── login.php            # User login page
+│       ├── register.php         # User registration page
+│       ├── settings.php         # User settings page
+│       ├── recipe-details.php   # Recipe details page
+│       ├── logout.php           # Logout functionality
+│       └── init_database.php    # Database initialization script
+├── historical-recipes-app/HistoricalRecipesApp/ # Original React Native app
+├── HistoricalRecipesApp/        # Duplicate directory (likely staging)
+├── Livreto de apoio - Livro de Receitas Históricas - Saberes e Sabores.pdf # Educational documentation
+├── livreto_text.txt             # Text version of educational content
+└── QWEN.md                      # This file
 ```
 
-## Application Details
+## Key Features Implemented
 
-### Mobile App (React Native)
-- **Framework**: React Native with TypeScript
-- **Navigation**: React Navigation (Drawer and Stack navigators)
-- **Backend**: Firebase (Authentication, Firestore, Storage)
-- **Internationalization**: i18next with Portuguese (Brazil) and English support
-- **State Management**: React hooks and AsyncStorage for local storage
-- **Additional Libraries**: 
-  - React Native Vector Icons
-  - React Native Image Picker
-  - React Native Sketch (for drawing tools)
-  - React Native SQLite Storage
+### 1. User Authentication System
+- **Registration/Login**: Secure user registration and login with password hashing
+- **Session Management**: Proper session handling with security measures
+- **User Roles**: Student, teacher, and admin roles with different permissions
+- **Profile Management**: Users can update their profile information
 
-### Web Version
-- **Technologies**: HTML5, CSS3, JavaScript (Vanilla)
-- **Framework**: Bootstrap 5 for responsive design
-- **Icons**: FontAwesome 6.4.0
-- **Features**: Complete web-based version of the application with localStorage for data persistence
+### 2. Database Integration
+- **Schema Design**: Comprehensive database schema with 14+ tables
+- **User Management**: Users, classes, teams, and team members
+- **Recipe Management**: Recipes with historical periods and categories
+- **Evaluation System**: Multi-dimensional rating system with research quality, creativity, presentation, and historical connection criteria
 
-## Key Features
+### 3. Recipe Management
+- **Create/Read/Update/Delete**: Full CRUD operations for recipes
+- **Ingredient Tracking**: Both historical and modern ingredients with pricing
+- **Historical Context**: Detailed historical information for each recipe
+- **Team-Based Creation**: Recipes can be created by individuals or teams
 
-1. **Recipe Browser**: Navigate historical recipes by period, culture, and difficulty
-2. **Recipe Creation**: Document historical recipes with complete information
-3. **Research Tools**: Price search, nutritional calculator, and historical library
-4. **Team Collaboration**: Work in teams on recipes and projects
-5. **Drawing Tools**: Illustrate recipes with digital drawing capabilities
-6. **Presentations**: Prepare and evaluate historical tasting presentations
-7. **Internationalization**: Full support for Portuguese (Brazil) and English
-8. **Theme Support**: Light and dark themes with automatic OS detection
+### 4. Team Collaboration
+- **Team Creation**: Users can create and manage teams
+- **Team Membership**: Users can join teams and designate leaders
+- **Collaborative Recipe Creation**: Teams can work together on recipes
+
+### 5. Evaluation System
+- **Multi-Dimensional Rating**: Research quality, creativity, presentation, and historical connection
+- **Feedback Mechanism**: Comments and ratings for recipes
+- **Average Calculations**: Automatic calculation of average ratings
+
+### 6. Search and Filtering
+- **Advanced Search**: Search across multiple criteria
+- **Filtering**: Filter recipes by historical period, culture, difficulty
+- **Real-time Results**: Dynamic search that updates results in real-time
+
+### 7. Dynamic UI
+- **Responsive Design**: Works well on different screen sizes
+- **Interactive Elements**: Forms, modals, and dynamic content loading
+- **Loading States**: Proper feedback during data loading
+
+### 8. Additional Features
+- **Internationalization**: Support for Portuguese and English
+- **Theme Support**: Light and dark themes with automatic OS detection
+- **Price Tracking**: Record and view ingredient prices
+- **Illustration Tools**: Integration for creating recipe illustrations
+
+## Database Schema
+
+The system uses a MySQL database with the following key tables:
+
+### Core Tables:
+- **users**: User accounts with authentication and profile data
+- **classes**: School classes with teacher assignment
+- **teams**: Team management for collaborative work
+- **team_members**: Team membership with leader designation
+- **historical_periods**: Historical periods (e.g., "Primeiros Povos", "Idade Média")
+- **recipe_categories**: Cultural categories (e.g., "Indígena", "Europeia")
+- **recipes**: Detailed recipe information with historical context
+- **recipe_ingredients**: Both historical and modern ingredient information
+- **user_evaluations**: Multi-dimensional rating system
+- **recipe_gallery**: Recipe images and illustrations
+- **recipe_comments**: Recipe discussion and feedback
+
+## API Endpoints
+
+### /api/recipes.php
+- GET: Fetch single recipe or multiple recipes with filtering
+- POST: Create or update recipes (includes ingredients)
+- DELETE: Remove recipes (with proper authorization)
+
+### /api/evaluations.php
+- GET: Fetch evaluations for a recipe with average ratings
+- POST: Submit or update evaluation ratings
+
+### /api/teams.php
+- GET: Fetch teams with members
+- POST: Create or update teams
+- PUT: Add users to teams
+- DELETE: Remove users from teams or delete teams
+
+### /api/search.php and /api/search_advanced.php
+- GET: Search across recipes, users, and teams with filters
 
 ## Technical Architecture
 
-The React Native application uses a clean, well-organized architecture:
-- **Components**: Reusable UI components
-- **Screens**: Different views of the application
-- **Utils**: Utility functions including Firebase configuration, nutritional calculator, and recipe service
-- **i18n**: Internationalization files for multiple languages
+### Frontend
+- **HTML/CSS/JavaScript**: Base technologies with Bootstrap 5 for responsive design
+- **PHP**: Server-side rendering with dynamic content
+- **AJAX**: Dynamic updates without page refresh
+- **Internationalization**: Support for Portuguese and English
 
-### Navigation Structure
-- Home Screen
-- Recipe Browser Screen
-- Recipe Detail Screen
-- Recipe Creation Screen
-- Team Screen
-- Research Tools Screen
-- Presentation Screen
-- Drawing Gallery Screen
-- Settings Screen
+### Backend
+- **PHP 7.4+**: Server-side logic with proper security measures
+- **MySQL**: Database management with proper relationships
+- **PDO**: Database abstraction with prepared statements
+- **Sessions**: Secure authentication with proper session management
 
-## Educational Context
-
-This project is designed for the Brazilian educational context, specifically targeting 6th to 9th grade students in Campo Grande. The pedagogical approach connects History with culinary practices, allowing students to explore different historical periods and cultures through food. Students are expected to research, document, and potentially prepare historical recipes while learning about the cultural and historical context of these dishes.
-
-## Building and Running
-
-### Prerequisites
-- Node.js (v18 or superior)
-- npm or yarn
-- Android Studio or Xcode (for simulators)
-- React Native CLI
-
-### Installation
-```bash
-# Navigate to the app directory
-cd /home/lfgranja/development/livrodereceitas/historical-recipes-app/HistoricalRecipesApp
-
-# Install dependencies
-npm install
-
-# Configure Firebase (add your own configuration)
-# Create src/utils/firebaseConfig.js with your Firebase settings
-```
-
-### Running the Application
-```bash
-# For Android
-npx react-native run-android
-
-# For iOS
-npx react-native run-ios
-
-# Using package scripts
-npm run android
-npm run ios
-npm run web  # For Expo web version
-npm run start  # Start Expo development server
-```
-
-### Web Version
-The web version can be served with a simple HTTP server:
-```bash
-cd /home/lfgranja/development/livrodereceitas/historical-recipes-app/website
-python3 -m http.server 8082
-```
+### Security Features
+- **Password Hashing**: Using PHP's password_hash() with PASSWORD_DEFAULT
+- **SQL Injection Prevention**: Prepared statements for all database queries
+- **XSS Prevention**: Input sanitization with htmlspecialchars()
+- **Session Security**: Regenerated session IDs and secure session handling
+- **Authorization**: Role-based access control for different operations
 
 ## Development Conventions
 
 ### Code Style
-- TypeScript is used for type safety
-- ESLint and Prettier are configured for consistent code formatting
-- React best practices are followed
-- Component-based architecture is used
+- PHP files follow PSR-1 and PSR-12 standards with proper documentation
+- Database queries use prepared statements to prevent SQL injection
+- User input is validated and sanitized before processing
+- Error handling with try-catch blocks and proper logging
 
-### Internationalization
-- The app supports Portuguese (Brazil) and English
-- Text is stored in JSON files in the `src/i18n/` directory
-- Language preference is stored in AsyncStorage
-- Automatic detection of device language with Portuguese as fallback
+### File Organization
+- API endpoints are in the `/api/` directory
+- Authentication functions in `/auth/`
+- Configuration files in `/config/`
+- Static assets (CSS, JS) in respective directories
 
-### Testing
-- Testing scenarios are documented in `src/utils/testing-scenarios.md`
-- Jest is configured for unit testing
-- Manual testing scenarios cover the complete user journey
+## Building and Running
 
-## Documentation
+### Prerequisites
+- PHP 7.4 or higher
+- MySQL 5.7 or higher
+- Web server (Apache/Nginx) with PHP support
+- Composer for dependency management (if any)
 
-### Educational Guide
-A comprehensive teacher-student guide is available in `src/utils/teacher-student-guide.md` that includes:
-- Project objectives and pedagogical approach
-- Step-by-step instructions for students
-- Evaluation criteria and assessment guidelines
-- Tips for historical research and recipe adaptation
+### Installation
+1. Clone the repository
+2. Configure database connection in `/config/database.php`
+3. Run the database initialization script: `php init_database.php`
+4. Set up the web server to point to the `website` directory
+5. Configure URL rewriting rules if needed
 
-### Support Files
-- `livreto_text.txt`: Detailed text version of the educational content
-- PDF documentation with project guidelines and methodology
+### Configuration
+- Update database credentials in `/config/database.php`
+- Set up appropriate security settings for production use
+- Configure SSL for secure authentication in production
 
-## Key Files and Directories
+## Educational Context
 
-- `App.tsx` / `App.js`: Main application component with navigation setup
-- `/src/screens/`: Contains all screen components
-- `/src/components/`: Reusable UI components
-- `/src/utils/`: Utility functions, configuration files, and guides
-- `/src/i18n/`: Internationalization files (pt.json, en.json)
-- `package.json`: Project dependencies and scripts
-- `README.md`: Project overview and setup instructions
+This application is designed for the Brazilian educational context, specifically targeting 6th to 9th grade students in Campo Grande. The pedagogical approach connects History with culinary practices, allowing students to explore different historical periods and cultures through food. Students research, document, and potentially prepare historical recipes while learning about the cultural and historical context of these dishes.
 
-## Special Features
+The system promotes:
+- Collaborative learning through team features
+- Critical thinking about culture and food
+- Practical application of historical knowledge
+- Value of ancestral culinary knowledge
 
-### Drawing and Illustration Tools
-The application includes tools for students to create digital drawings to accompany their historical recipes, enhancing the creative and educational experience.
+## Project Status
 
-### Research Tools
-Integrated tools for researching ingredient prices and calculating nutritional information, connecting historical recipes with modern nutritional knowledge.
+The transformation from static website to dynamic system is complete with all requested features implemented:
 
-### Team Collaboration
-Students can form teams to collaborate on recipe creation and research, promoting teamwork and shared learning experiences.
+✅ User registration and authentication system  
+✅ Database integration with comprehensive schema  
+✅ Team collaboration features  
+✅ Evaluation/rating system  
+✅ Search and filtering functionality  
+✅ Dynamic UI with proper API integration  
+✅ Settings and user management pages  
+✅ Recipe creation and management  
+✅ Internationalization support  
+✅ Theme support (light/dark)  
 
-## Project Goals
-
-This project aims to transform History learning into a sensory and collaborative experience where students research, document, and potentially prepare historical recipes, understanding how food reflects culture and living conditions of different peoples and time periods.
-
-## Contributing
-
-The project is designed to meet the specific educational needs of the "Sabores e Sabores" project in Campo Grande municipal schools. Contributions are welcome, particularly those that consider the Brazilian educational context and current curriculum guidelines.
+The system is fully functional and ready for educational use in the classroom environment for which it was designed.
